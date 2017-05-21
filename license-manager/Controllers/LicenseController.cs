@@ -116,7 +116,7 @@ namespace licensemanager.Controllers
         // POST: api/License/Add
         [HttpPost]
         [Route("api/License/Add")]
-        public ResponseModel<int> Post([FromBody]LicenseModel dataToAdd)
+        public ResponseModel<int> Post([FromBody] LicenseModel dataToAdd)
         {
             var resp = new ResponseModel<int>();
 
@@ -127,6 +127,7 @@ namespace licensemanager.Controllers
                     resp.Data = 0;
                     resp.Status = 500;
                     resp.Description = "Data is null";
+                    return resp;
                 }
 
                 var validate = LicenseClass.ValidateLicenseAdd(dataToAdd);
@@ -135,21 +136,22 @@ namespace licensemanager.Controllers
                     resp.Data = 0;
                     resp.Status = 500;
                     resp.Description = validate.Message;
+                    return resp;
                 }
 
                 var model = new Licenses
                 {
-                  Creation = DateTime.Now,
-                  IdClients = dataToAdd.IdClients,
-                  IsActive = dataToAdd.IsActive,
-                  AssignedVersion = dataToAdd.AssignedVersion,
-                  Expiration = dataToAdd.Expiration,
-                  IdApplication = dataToAdd.IdApplication,
-                  IdentityNumber = dataToAdd.IdentityNumber,
-                  Inclusion = dataToAdd.Inclusion,
-                  IsActivated = dataToAdd.IsActivated,
-                  Number = dataToAdd.Number,
-                  Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
+                    Creation = DateTime.Now,
+                    IdClients = dataToAdd.IdClients,
+                    IsActive = dataToAdd.IsActive,
+                    AssignedVersion = dataToAdd.AssignedVersion,
+                    Expiration = dataToAdd.Expiration,
+                    IdApplication = dataToAdd.IdApplication,
+                    IdentityNumber = dataToAdd.IdentityNumber,
+                    Inclusion = dataToAdd.Inclusion,
+                    IsActivated = dataToAdd.IsActivated,
+                    Number = dataToAdd.Number,
+                    Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
                 };
 
                 ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
@@ -163,32 +165,24 @@ namespace licensemanager.Controllers
                             resp.Data = model.Id;
                             resp.Status = 200;
                             resp.Description = "OK";
+                            return resp;
                         }
-                        else
-                        {
-                            throw new Exception("Error in insert permissions");
-                        }
+                        throw new Exception("Error in insert permissions");
                     }
-                    else
-                    {
-                        resp.Data = model.Id;
-                        resp.Status = 200;
-                        resp.Description = "OK";
-                    }
+                    resp.Data = model.Id;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                    return resp;
                 }
-                else
-                {
-                    throw new Exception("Unkown insert error");
-                }
+                throw new Exception("Unkown insert error");
             }
             catch (Exception ex)
             {
                 resp.Status = 500;
                 resp.Description = $"Error: {ex.Message}";
                 resp.Data = 0;
+                return resp;
             }
-
-            return resp;
         }
         
     }
