@@ -11598,10 +11598,10 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PROJEKTY\\c#\\projekt-inz\\license-manager\\licensemanager.csproj",
+      "projectUniqueName": "C:\\PROJEKTY\\c#\\licenseItPro\\license-it-api\\license-manager\\licensemanager.csproj",
       "projectName": "licensemanager",
-      "projectPath": "C:\\PROJEKTY\\c#\\projekt-inz\\license-manager\\licensemanager.csproj",
-      "outputPath": "C:\\PROJEKTY\\c#\\projekt-inz\\license-manager\\obj\\",
+      "projectPath": "C:\\PROJEKTY\\c#\\licenseItPro\\license-it-api\\license-manager\\licensemanager.csproj",
+      "outputPath": "C:\\PROJEKTY\\c#\\licenseItPro\\license-it-api\\license-manager\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.1"

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using licensemanager.Classes;
+using licensemanager.Model.DataBaseModel;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
-using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
 using licensemanager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -49,10 +49,12 @@ namespace licensemanager.Controllers
 
                 if (user == null || user.IsDelete)
                 {
-                    response.Status = "User not exist or is deleted";
+                    response.Status = 200;
+                    response.Description = "User not exist or is deleted";
                     return response;
                 }
 
+                response.Status = 200;
                 response.Data = new UserModel
                 {
                     Id = user.Id,
@@ -66,14 +68,15 @@ namespace licensemanager.Controllers
             }
             catch (Exception ex)
             {
-                response.Status = $"Critical error: {ex.Message}";
+                response.Status = 500;
+                response.Description = $"Critical error: {ex.Message}";
                 response.Data = null;
             }
 
             return response;
         }
 
-        // POST api/User
+        // POST api/User/Add
         [HttpPost]
         [AllowAnonymous]
         [Route("api/User/Add")]
@@ -86,13 +89,15 @@ namespace licensemanager.Controllers
 
                 if (string.IsNullOrEmpty(value?.Email))
                 {
-                    response.Status = "Wrong data...";
+                    response.Status = 200;
+                    response.Description = "Wrong data...";
                     return response;
                 }
 
                 if (userRepo.ExistUserByEmail(value.Email))
                 {
-                    response.Status = "This user already exist";
+                    response.Status = 200;
+                    response.Description = "This user already exist";
                     return response;
                 }
 
@@ -113,12 +118,14 @@ namespace licensemanager.Controllers
                 value.Id = user.Id;
                 value.Password = null;
 
-                response.Status = "OK";
+                response.Status = 200;
+                response.Description = "OK";
                 response.Data = value;
             }
             catch (Exception ex)
             {
-                response.Status = $"Critical error: {ex.Message}";
+                response.Status = 500;
+                response.Description = $"Critical error: {ex.Message}";
                 response.Data = null;
             }
             return response;
@@ -135,7 +142,8 @@ namespace licensemanager.Controllers
             {
                 if (userModel == null)
                 {
-                    response.Status = "Wrong data...";
+                    response.Status = 200;
+                    response.Description = "Wrong data...";
                     response.Data = false;
                     return response;
                 }
@@ -149,18 +157,21 @@ namespace licensemanager.Controllers
 
                 if (userRepo.Update(user))
                 {
-                    response.Status = "OK";
+                    response.Status = 200;
+                    response.Description = "OK";
                     response.Data = true;
                     return response;
                 }
 
-                response.Status = "Error";
+                response.Status = 500;
+                response.Description = "Error";
                 response.Data = false;
                 return response;
             }
             catch (Exception ex)
             {
-                response.Status = $"Critical error: {ex.Message}";
+                response.Status = 500;
+                response.Description = $"Critical error: {ex.Message}";
                 response.Data = false;
                 return response;
             }
@@ -169,28 +180,52 @@ namespace licensemanager.Controllers
         // PUT api/User/Edit
         [HttpPut]
         [Route("api/User/Edit")]
-        public bool EditUser([FromBody] UserModel userModel)
+        public ResponseModel<bool> EditUser([FromBody] UserModel userModel)
         {
-            if (userModel == null)
-                return false;
+            var response = new ResponseModel<bool>();
+            try
+            {
+                if (userModel == null)
+                {
+                    response.Status = 200;
+                    response.Description = "Wrong data...";
+                    response.Data = false;
+                    return response;
+                }
 
-            IUserRepository userRepo = new UserRepository(new DataBaseContext());
+                IUserRepository userRepo = new UserRepository(new DataBaseContext());
 
-            var user = userRepo.GetById(userModel.Id);
+                var user = userRepo.GetById(userModel.Id);
 
-            if (!string.IsNullOrEmpty(userModel.Password))
-                user.Password = CryptoClass.CreateHash(userModel.Password);
+                if (!string.IsNullOrEmpty(userModel.Password))
+                    user.Password = CryptoClass.CreateHash(userModel.Password);
 
-            user.IsDelete = userModel.IsDelete;
-            user.IsActive = userModel.IsActive;
-            user.Email = userModel.Email;
-            user.FirstName = userModel.FirstName;
-            user.LastName = userModel.LastName;
+                user.IsDelete = userModel.IsDelete;
+                user.IsActive = userModel.IsActive;
+                user.Email = userModel.Email;
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
 
-            userRepo.Update(user);
+                if (userRepo.Update(user))
+                {
+                    response.Status = 200;
+                    response.Description = "OK";
+                    response.Data = true;
+                    return response;
+                }
+                response.Status = 500;
+                response.Description = "Error";
+                response.Data = false;
 
-            return true;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Status = 500;
+                response.Description = $"Critical error: {ex.Message}";
+                response.Data = false;
+                return response;
+            }
         }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Models.DataBaseModel;
+using licensemanager.Model.DataBaseModel;
 
 namespace licensemanager.Settings
 {
@@ -11,11 +11,15 @@ namespace licensemanager.Settings
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-         
-            UsersRecords(context);
-            
-        }
 
+            UsersRecords(context);
+            ApplicationsRecords(context);
+            ClientsRecords(context);
+            LicensesRecords(context);
+            PermissionsRecords(context);
+
+        }
+        
         private static void UsersRecords(DataBaseContext context)
         {
             // Look for any students.
@@ -41,6 +45,93 @@ namespace licensemanager.Settings
             context.SaveChanges();
         }
 
-       
+        private static void LicensesRecords(DataBaseContext context)
+        {
+            // Look for any students.
+            if (context.Licenses.Any())
+            {
+                return;
+            }
+
+            var license = new Licenses
+            {
+                Id = 1,
+                IsActive = true,
+                AssignedVersion = 1,
+                IdClients = 1,
+                Creation = DateTime.Now,
+                Expiration = DateTime.MaxValue,
+                Inclusion = DateTime.Now,
+                IsActivated = false,
+                Number = "1111-1111-1111-1111",
+                IdentityNumber = null,
+                IdApplication = 1,
+                
+            };
+
+            context.Licenses.Add(license);
+
+            context.SaveChanges();
+        }
+        private static void ApplicationsRecords(DataBaseContext context)
+        {
+            if (context.Application.Any())
+            {
+                return;
+            }
+
+            var app = new Application
+            {
+                IsActive = true,
+                Creation = DateTime.Now,
+                Description = "opis",
+                Name = "testowa apka",
+                Version = (decimal)1.0
+
+            };
+
+            context.Application.Add(app);
+
+            context.SaveChanges();
+        }
+
+        private static void PermissionsRecords(DataBaseContext context)
+        {
+            if (context.Permissions.Any())
+            {
+                return;
+            }
+
+            var permission = new Permissions
+            {
+               IdLicense = 1,
+               Name = "DEMO",
+               IsActive = true
+            };
+
+            context.Permissions.Add(permission);
+
+            context.SaveChanges();
+        }
+
+        private static void ClientsRecords(DataBaseContext context)
+        {
+            if (context.Clients.Any())
+            {
+                return;
+            }
+
+            var clients = new Clients
+            {
+               Creation = DateTime.Now,
+               IsActive = true,
+               Updated = DateTime.Now,
+               Name = "UAM"
+            };
+
+            context.Clients.Add(clients);
+
+            context.SaveChanges();
+        }
     }
 }

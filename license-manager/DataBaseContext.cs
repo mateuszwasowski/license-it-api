@@ -1,4 +1,4 @@
-﻿using licensemanager.Models.DataBaseModel;
+﻿using licensemanager.Model.DataBaseModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MySQL.Data.Entity.Extensions;
@@ -22,6 +22,15 @@ namespace licensemanager
         }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Application> Application { get; set; }
+
+        public DbSet<Clients> Clients { get; set; }
+
+        public DbSet<Licenses> Licenses { get; set; }
+
+        public DbSet<Permissions> Permissions { get; set; }
+
     }
 }
 

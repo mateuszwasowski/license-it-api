@@ -9,11 +9,9 @@ using licensemanager.Repositories.Interfaces;
 using licensemanager.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using MySQL.Data.Entity.Extensions;
 
@@ -46,7 +44,18 @@ namespace licensemanager
 
             services.AddDbContext<DataBaseContext>(options => options.UseMySQL(connectionString));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    x => x.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
             services.AddMvc();
+
+           
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -65,7 +74,8 @@ namespace licensemanager
 
             app.UseStaticFiles();
 
-            app.UseCors("AllowAnyOrigin");
+            // global policy - assign here or on each controller
+            app.UseCors("CorsPolicy");
 
             ConfigureAuth(app);
 
@@ -79,15 +89,13 @@ namespace licensemanager
                     "spa-fallback",
                     new {controller = "Home", action = "Index"});
             });
-
-#if DEBUG
+            
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<DataBaseContext>();
 
                 DbInitializer.Initialize(context);
             }
-#endif
         }
 
         private static void ConfigureAuth(IApplicationBuilder app)
@@ -136,11 +144,9 @@ namespace licensemanager
                 TicketDataFormat = new CustomJwtDataFormat(
                     SecurityAlgorithms.HmacSha256,
                     tokenValidationParameters),
-                Events = new CookieAuthenticationEvents()
-                {
-                    OnRedirectToLogin = async (context) => { context.HttpContext.Response.Redirect("/login"); }
-                }
+                
             });
+            
         }
 
         private static Task<ClaimsIdentity> GetIdentity(string email, string password)
