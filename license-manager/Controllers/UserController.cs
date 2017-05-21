@@ -16,9 +16,9 @@ namespace licensemanager.Controllers
     [Authorize]
     public class UserController : Controller
     {
-        // GET: api/User
+        // GET: api/User/Get
         [HttpGet]
-        [Route("api/User")]
+        [Route("api/User/Get")]
         public IEnumerable<UserModel> Get()
         {
             IUserRepository userRepo = new UserRepository(new DataBaseContext());
@@ -36,7 +36,7 @@ namespace licensemanager.Controllers
 
         // GET api/User/5
         [HttpGet]
-        [Route("api/User/{id}")]
+        [Route("api/User/GetById/{id}")]
         public ResponseModel<UserModel> Get(int id)
         {
             var response = new ResponseModel<UserModel>();
