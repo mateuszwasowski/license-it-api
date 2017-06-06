@@ -1434,6 +1434,19 @@
           "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Composite.dll": {}
         }
       },
+      "Microsoft.Extensions.FileProviders.Embedded/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.0.0",
+          "System.Runtime.Extensions": "4.1.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+        }
+      },
       "Microsoft.Extensions.FileProviders.Physical/1.1.0": {
         "type": "package",
         "dependencies": {
@@ -2473,6 +2486,58 @@
         },
         "runtime": {
           "lib/netstandard1.3/SapientGuardian.MySql.Data.dll": {}
+        }
+      },
+      "Swashbuckle/6.0.0-beta902": {
+        "type": "package",
+        "dependencies": {
+          "Swashbuckle.Swagger": "6.0.0-beta902",
+          "Swashbuckle.SwaggerGen": "6.0.0-beta902",
+          "Swashbuckle.SwaggerUi": "6.0.0-beta902"
+        }
+      },
+      "Swashbuckle.Swagger/6.0.0-beta902": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.Swagger.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.Swagger.dll": {}
+        }
+      },
+      "Swashbuckle.SwaggerGen/6.0.0-beta902": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.0.0",
+          "Swashbuckle.Swagger": "6.0.0-beta902",
+          "System.Xml.XPath": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerGen.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerGen.dll": {}
+        }
+      },
+      "Swashbuckle.SwaggerUi/6.0.0-beta902": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+          "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
+          "System.Xml.XPath": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerUi.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerUi.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -4555,7 +4620,7 @@
           "System.Xml.ReaderWriter": "4.0.11"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Xml.XPath.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.dll": {}
@@ -5760,6 +5825,17 @@
         "microsoft.extensions.fileproviders.composite.nuspec"
       ]
     },
+    "Microsoft.Extensions.FileProviders.Embedded/1.0.0": {
+      "sha512": "mMCI3/BLXAyBCDneqOI4ohETd0IXjbXZdoiCm1dYdnOdV193ByEOCFQ6/Vn9RVdU5UlC4Nn1P4J5Df7pXG/vGg==",
+      "type": "package",
+      "path": "microsoft.extensions.fileproviders.embedded/1.0.0",
+      "files": [
+        "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.dll",
+        "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.xml",
+        "microsoft.extensions.fileproviders.embedded.1.0.0.nupkg.sha512",
+        "microsoft.extensions.fileproviders.embedded.nuspec"
+      ]
+    },
     "Microsoft.Extensions.FileProviders.Physical/1.1.0": {
       "sha512": "ckyGwMGd4v1nE70wZ7ytax+Ef9WHQ6IcE4apLYG4um6Dfcw/Y6QJY0Fcv3Ck9WK/Uj0YMxHnNCZH6MBp6boeEw==",
       "type": "package",
@@ -6719,6 +6795,48 @@
         "lib/netstandard1.3/SapientGuardian.MySql.Data.dll",
         "sapientguardian.mysql.data.6.9.816.nupkg.sha512",
         "sapientguardian.mysql.data.nuspec"
+      ]
+    },
+    "Swashbuckle/6.0.0-beta902": {
+      "sha512": "jEGtMQ6pl/q6ZGB6fVkp6F830qDDNOa6QekFjanI7brmftDTv7TAFNoAjosKGH11SFO3D1g+A2UY45bskseqFQ==",
+      "type": "package",
+      "path": "swashbuckle/6.0.0-beta902",
+      "files": [
+        "swashbuckle.6.0.0-beta902.nupkg.sha512",
+        "swashbuckle.nuspec"
+      ]
+    },
+    "Swashbuckle.Swagger/6.0.0-beta902": {
+      "sha512": "DAA0nU/XCLXjir9EPScRWjUBhTT88iS+2f9wQz5av524FhMAJOVG/N/vNvXj8QPObQdnK3ttW7k/wyota73yOQ==",
+      "type": "package",
+      "path": "swashbuckle.swagger/6.0.0-beta902",
+      "files": [
+        "lib/net451/Swashbuckle.Swagger.dll",
+        "lib/netstandard1.6/Swashbuckle.Swagger.dll",
+        "swashbuckle.swagger.6.0.0-beta902.nupkg.sha512",
+        "swashbuckle.swagger.nuspec"
+      ]
+    },
+    "Swashbuckle.SwaggerGen/6.0.0-beta902": {
+      "sha512": "zSHFHSf6KJ7yNwsYAibd1z0fqLVpueeax8wVwyLSZvMiUkfrNGnX/NhXKSzVltuGm3b52k7sG05mL9nwY3YvIA==",
+      "type": "package",
+      "path": "swashbuckle.swaggergen/6.0.0-beta902",
+      "files": [
+        "lib/net451/Swashbuckle.SwaggerGen.dll",
+        "lib/netstandard1.6/Swashbuckle.SwaggerGen.dll",
+        "swashbuckle.swaggergen.6.0.0-beta902.nupkg.sha512",
+        "swashbuckle.swaggergen.nuspec"
+      ]
+    },
+    "Swashbuckle.SwaggerUi/6.0.0-beta902": {
+      "sha512": "qdxsxIw55cFGbng2F10soyS/eJK4MZW/M7jjoQIxUxOdpe+hG2EmNwWXijEPMwJJ5qcpB/QOc766LHtFPx9Ucg==",
+      "type": "package",
+      "path": "swashbuckle.swaggerui/6.0.0-beta902",
+      "files": [
+        "lib/net451/Swashbuckle.SwaggerUi.dll",
+        "lib/netstandard1.6/Swashbuckle.SwaggerUi.dll",
+        "swashbuckle.swaggerui.6.0.0-beta902.nupkg.sha512",
+        "swashbuckle.swaggerui.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -11589,6 +11707,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 1.1.0",
       "MySql.Data.EntityFrameworkCore >= 7.0.7-m61",
       "SapientGuardian.EntityFrameworkCore.MySql >= 7.1.23",
+      "Swashbuckle >= 6.0.0-beta902",
       "Webpack >= 4.0.0"
     ]
   },
@@ -11626,6 +11745,10 @@
           "Microsoft.AspNetCore": {
             "target": "Package",
             "version": "1.1.1"
+          },
+          "Swashbuckle": {
+            "target": "Package",
+            "version": "6.0.0-beta902"
           },
           "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",

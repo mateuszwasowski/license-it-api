@@ -116,15 +116,15 @@ namespace licensemanager.Controllers
         // POST: api/License/Add
         [HttpPost]
         [Route("api/License/Add")]
-        public ResponseModel<int> Post([FromBody] LicenseModel dataToAdd)
+        public ResponseModel<string> Post([FromBody] LicenseModel dataToAdd)
         {
-            var resp = new ResponseModel<int>();
+            var resp = new ResponseModel<string>();
 
             try
             {
                 if (dataToAdd is null)
                 {
-                    resp.Data = 0;
+                    resp.Data = string.Empty;
                     resp.Status = 500;
                     resp.Description = "Data is null";
                     return resp;
@@ -133,10 +133,16 @@ namespace licensemanager.Controllers
                 var validate = LicenseClass.ValidateLicenseAdd(dataToAdd);
                 if (validate != null)
                 {
-                    resp.Data = 0;
+                    resp.Data = string.Empty;
                     resp.Status = 500;
                     resp.Description = validate.Message;
                     return resp;
+                }
+
+                var licNumber = LicenseClass.GetNewLicenseString();
+                if (string.IsNullOrEmpty(licNumber))
+                {
+                    throw new Exception("Number can't be generate");
                 }
 
                 var model = new Licenses
@@ -150,7 +156,7 @@ namespace licensemanager.Controllers
                     IdentityNumber = dataToAdd.IdentityNumber,
                     Inclusion = dataToAdd.Inclusion,
                     IsActivated = dataToAdd.IsActivated,
-                    Number = dataToAdd.Number,
+                    Number = licNumber,
                     Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
                 };
 
@@ -160,16 +166,10 @@ namespace licensemanager.Controllers
                 {
                     if (model.Permissions != null)
                     {
-                        if (LicenseClass.InsertPermissions(model))
-                        {
-                            resp.Data = model.Id;
-                            resp.Status = 200;
-                            resp.Description = "OK";
-                            return resp;
-                        }
-                        throw new Exception("Error in insert permissions");
+                        if (!LicenseClass.InsertPermissions(model))
+                            throw new Exception("Error in insert permissions");
                     }
-                    resp.Data = model.Id;
+                    resp.Data = licNumber;
                     resp.Status = 200;
                     resp.Description = "OK";
                     return resp;
@@ -180,7 +180,7 @@ namespace licensemanager.Controllers
             {
                 resp.Status = 500;
                 resp.Description = $"Error: {ex.Message}";
-                resp.Data = 0;
+                resp.Data = string.Empty;
                 return resp;
             }
         }

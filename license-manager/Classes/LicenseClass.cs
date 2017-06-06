@@ -26,7 +26,7 @@ namespace licensemanager.Classes
         private static string RandomString(int length)
         {
             var random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
             var stringVal = new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
 
@@ -64,15 +64,6 @@ namespace licensemanager.Classes
 
             if (dataToAdd.IdApplication <= 0)
                 return new Exception("Id Application is required");
-
-            if (string.IsNullOrEmpty(dataToAdd.Number))
-                return new Exception("Number is required");
-
-            if (CheckExistLicenseByNumber(dataToAdd.Number))
-                return new Exception("Number already exist");
-
-            if (string.IsNullOrEmpty(dataToAdd.Number))
-                return new Exception("Number is required");
 
             return null;
         }
