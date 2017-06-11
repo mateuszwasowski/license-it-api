@@ -216,6 +216,78 @@ namespace licensemanager.Controllers
             }
         }
 
+        // POST: api/License/AddReturnId
+        [HttpPost]
+        [Route("api/License/AddReturnId")]
+        public ResponseModel<int> PostReturnId([FromBody] LicenseModel dataToAdd)
+        {
+            var resp = new ResponseModel<int>();
+
+            try
+            {
+                if (dataToAdd is null)
+                {
+                    resp.Data = 0;
+                    resp.Status = 500;
+                    resp.Description = "Data is null";
+                    return resp;
+                }
+
+                var validate = LicenseClass.ValidateLicenseAdd(dataToAdd);
+                if (validate != null)
+                {
+                    resp.Data = 0;
+                    resp.Status = 500;
+                    resp.Description = validate.Message;
+                    return resp;
+                }
+
+                var licNumber = LicenseClass.GetNewLicenseString();
+                if (string.IsNullOrEmpty(licNumber))
+                {
+                    throw new Exception("Number can't be generate");
+                }
+
+                var model = new Licenses
+                {
+                    Creation = DateTime.Now,
+                    IdClients = dataToAdd.IdClient,
+                    IsActive = dataToAdd.IsActive,
+                    AssignedVersion = dataToAdd.AssignedVersion,
+                    Expiration = dataToAdd.Expiration,
+                    IdApplication = dataToAdd.IdApplication,
+                    IdentityNumber = dataToAdd.IdentityNumber,
+                    Inclusion = dataToAdd.Inclusion,
+                    IsActivated = dataToAdd.IsActivated,
+                    Number = licNumber,
+                    Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
+                };
+
+                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
+
+                if (appRepo.Insert(model))
+                {
+                    if (model.Permissions != null)
+                    {
+                        if (!LicenseClass.InsertPermissions(model))
+                            throw new Exception("Error in insert permissions");
+                    }
+                    resp.Data = model.Id;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                    return resp;
+                }
+                throw new Exception("Unkown insert error");
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = 0;
+                return resp;
+            }
+        }
+
         // PUT: api/License/Edit
         [HttpPut]
         [Route("api/License/Edit")]
