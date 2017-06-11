@@ -136,7 +136,7 @@ namespace licensemanager.Controllers
         // PUT: api/Applications/Edit
         [HttpPut]
         [Route("api/Applications/Edit")]
-        public ResponseModel<bool> Put([FromBody]int id, [FromBody]ApplicationModel applicationData)
+        public ResponseModel<bool> Put([FromBody]ApplicationModel applicationData)
         {
             var resp = new ResponseModel<bool>();
 

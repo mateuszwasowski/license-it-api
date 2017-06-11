@@ -83,6 +83,37 @@ namespace licensemanager.Controllers
             return resp;
         }
 
+        // GET: api/License/Get
+        [HttpGet]
+        [Route("api/License/Get/{id}")]
+        public ResponseModel<LicenseModel> GetByIdn(int id)
+        {
+            var resp = new ResponseModel<LicenseModel>();
+
+            try
+            {
+                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
+                var app = appRepo.GetById(id);
+
+                if (app != null)
+                {
+                    resp.Data = app;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                }
+                else
+                    throw new Exception("Not found");
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = null;
+            }
+
+            return resp;
+        }
+
         // GET: api/License/GetNewKey
         [HttpGet]
         [Route("api/License/GetNewKey")]
@@ -112,7 +143,7 @@ namespace licensemanager.Controllers
 
             return resp;
         }
-
+        
         // POST: api/License/Add
         [HttpPost]
         [Route("api/License/Add")]
@@ -148,7 +179,7 @@ namespace licensemanager.Controllers
                 var model = new Licenses
                 {
                     Creation = DateTime.Now,
-                    IdClients = dataToAdd.IdClients,
+                    IdClients = dataToAdd.IdClient,
                     IsActive = dataToAdd.IsActive,
                     AssignedVersion = dataToAdd.AssignedVersion,
                     Expiration = dataToAdd.Expiration,
@@ -184,6 +215,39 @@ namespace licensemanager.Controllers
                 return resp;
             }
         }
-        
+
+        // PUT: api/License/Edit
+        [HttpPut]
+        [Route("api/License/Edit")]
+        public ResponseModel<bool> Put([FromBody]LicenseModel licenseModel)
+        {
+            var resp = new ResponseModel<bool>();
+
+            try
+            {
+                if (licenseModel == null)
+                    throw new Exception("Data is null");
+
+                var id = licenseModel.Id;
+
+                if (id <= 0)
+                    throw new Exception("id_license <= 0");
+
+                ILicenseRepository repo = new LicenseRepository(new DataBaseContext());
+                resp.Data =  repo.EditLicense(id, licenseModel);
+
+                resp.Status = 200;
+                resp.Description = "OK";
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = false;
+            }
+
+            return resp;
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.1",
-    "signature": "cb518956615ab7435a506aece83c27fa8a7d6984"
+    "signature": "86b1d81d3fdcecafa8772945835d1a10d33e1e5a"
   },
   "compilationOptions": {
     "defines": [
@@ -41,6 +41,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "1.1.0",
           "MySql.Data.EntityFrameworkCore": "7.0.7-m61",
           "SapientGuardian.EntityFrameworkCore.MySql": "7.1.23",
+          "Swashbuckle": "6.0.0-beta902",
           "Webpack": "4.0.0"
         },
         "runtime": {
@@ -1228,6 +1229,18 @@
           "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Composite.dll": {}
         }
       },
+      "microsoft.extensions.fileproviders.embedded/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Abstractions": "1.1.1",
+          "System.Runtime.Extensions": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.0/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+        }
+      },
       "microsoft.extensions.fileproviders.physical/1.1.0": {
         "dependencies": {
           "Microsoft.Extensions.FileProviders.Abstractions": "1.1.1",
@@ -1833,6 +1846,54 @@
         },
         "compile": {
           "lib/netstandard1.3/SapientGuardian.MySql.Data.dll": {}
+        }
+      },
+      "swashbuckle/6.0.0-beta902": {
+        "dependencies": {
+          "Swashbuckle.Swagger": "6.0.0-beta902",
+          "Swashbuckle.SwaggerGen": "6.0.0-beta902",
+          "Swashbuckle.SwaggerUi": "6.0.0-beta902"
+        }
+      },
+      "swashbuckle.swagger/6.0.0-beta902": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.1.2",
+          "Microsoft.AspNetCore.Mvc.Formatters.Json": "1.1.2"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.Swagger.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.Swagger.dll": {}
+        }
+      },
+      "swashbuckle.swaggergen/6.0.0-beta902": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.ApiExplorer": "1.1.2",
+          "Microsoft.AspNetCore.Mvc.Core": "1.1.2",
+          "Microsoft.AspNetCore.Mvc.DataAnnotations": "1.1.2",
+          "Swashbuckle.Swagger": "6.0.0-beta902",
+          "System.Xml.XPath": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerGen.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerGen.dll": {}
+        }
+      },
+      "swashbuckle.swaggerui/6.0.0-beta902": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "1.1.2",
+          "Microsoft.AspNetCore.StaticFiles": "1.1.1",
+          "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
+          "System.Xml.XPath": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerUi.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.6/Swashbuckle.SwaggerUi.dll": {}
         }
       },
       "system.collections.nongeneric/4.3.0": {
@@ -3876,6 +3937,9 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         },
+        "compile": {
+          "ref/netstandard1.3/System.Xml.XPath.dll": {}
+        },
         "compileOnly": true
       },
       "system.xml.xpath.xdocument/4.0.1": {
@@ -4446,6 +4510,13 @@
       "path": "microsoft.extensions.fileproviders.composite/1.1.0",
       "hashPath": "microsoft.extensions.fileproviders.composite.1.1.0.nupkg.sha512"
     },
+    "microsoft.extensions.fileproviders.embedded/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mMCI3/BLXAyBCDneqOI4ohETd0IXjbXZdoiCm1dYdnOdV193ByEOCFQ6/Vn9RVdU5UlC4Nn1P4J5Df7pXG/vGg==",
+      "path": "microsoft.extensions.fileproviders.embedded/1.0.0",
+      "hashPath": "microsoft.extensions.fileproviders.embedded.1.0.0.nupkg.sha512"
+    },
     "microsoft.extensions.fileproviders.physical/1.1.0": {
       "type": "package",
       "serviceable": true,
@@ -4711,6 +4782,34 @@
       "sha512": "sha512-uFY+zapwr++/woFnmFLCrQ1DsrO1ItzQN5WQkWBdndYlTsm7ZBrDCK6g4BEzU4+wG2FPD4Jo/by/VsQqZ9PrsQ==",
       "path": "sapientguardian.mysql.data/6.9.816",
       "hashPath": "sapientguardian.mysql.data.6.9.816.nupkg.sha512"
+    },
+    "swashbuckle/6.0.0-beta902": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jEGtMQ6pl/q6ZGB6fVkp6F830qDDNOa6QekFjanI7brmftDTv7TAFNoAjosKGH11SFO3D1g+A2UY45bskseqFQ==",
+      "path": "swashbuckle/6.0.0-beta902",
+      "hashPath": "swashbuckle.6.0.0-beta902.nupkg.sha512"
+    },
+    "swashbuckle.swagger/6.0.0-beta902": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DAA0nU/XCLXjir9EPScRWjUBhTT88iS+2f9wQz5av524FhMAJOVG/N/vNvXj8QPObQdnK3ttW7k/wyota73yOQ==",
+      "path": "swashbuckle.swagger/6.0.0-beta902",
+      "hashPath": "swashbuckle.swagger.6.0.0-beta902.nupkg.sha512"
+    },
+    "swashbuckle.swaggergen/6.0.0-beta902": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zSHFHSf6KJ7yNwsYAibd1z0fqLVpueeax8wVwyLSZvMiUkfrNGnX/NhXKSzVltuGm3b52k7sG05mL9nwY3YvIA==",
+      "path": "swashbuckle.swaggergen/6.0.0-beta902",
+      "hashPath": "swashbuckle.swaggergen.6.0.0-beta902.nupkg.sha512"
+    },
+    "swashbuckle.swaggerui/6.0.0-beta902": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qdxsxIw55cFGbng2F10soyS/eJK4MZW/M7jjoQIxUxOdpe+hG2EmNwWXijEPMwJJ5qcpB/QOc766LHtFPx9Ucg==",
+      "path": "swashbuckle.swaggerui/6.0.0-beta902",
+      "hashPath": "swashbuckle.swaggerui.6.0.0-beta902.nupkg.sha512"
     },
     "system.collections.nongeneric/4.3.0": {
       "type": "package",

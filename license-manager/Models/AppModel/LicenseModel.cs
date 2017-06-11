@@ -14,8 +14,11 @@ namespace licensemanager.Models.AppModel
         [DataMember(Name = "idApplication")]
         public int IdApplication { get; set; }
 
-        [DataMember(Name = "idClients")]
-        public int IdClients { get; set; }
+        [DataMember(Name = "idClient")]
+        public int IdClient { get; set; }
+
+        [DataMember(Name = "clientName")]
+        public string ClientName { get; set; }
 
         [DataMember(Name = "number")]
         public string Number { get; set; }

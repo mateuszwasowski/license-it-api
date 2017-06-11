@@ -94,9 +94,7 @@ namespace licensemanager.Controllers
             {
                 if (dataToAdd == null)
                 {
-                    resp.Data = 0;
-                    resp.Status = 500;
-                    resp.Description = "Data is null";
+                    throw new Exception("Data is null");
                 }
 
                 var model = new Clients()
@@ -108,6 +106,9 @@ namespace licensemanager.Controllers
                 };
 
                 IClientsRepository appRepo = new ClientsRepository(new DataBaseContext());
+                
+                if (appRepo.ExistByName(model.Name))
+                    throw new Exception("Client already exist");
 
                 if (appRepo.Insert(model))
                 {
@@ -117,9 +118,7 @@ namespace licensemanager.Controllers
                 }
                 else
                 {
-                    resp.Status = 200;
-                    resp.Data = 0;
-                    resp.Description = "Error";
+                    throw new Exception("Not inserted");
                 }
             }
             catch (Exception ex)
@@ -135,7 +134,7 @@ namespace licensemanager.Controllers
         // PUT: api/Clients/Edit
         [HttpPut]
         [Route("api/Clients/Edit")]
-        public ResponseModel<bool> Put([FromBody]int id, [FromBody]ClientsModel applicationData)
+        public ResponseModel<bool> Put([FromBody]ClientsModel applicationData)
         {
             var resp = new ResponseModel<bool>();
 

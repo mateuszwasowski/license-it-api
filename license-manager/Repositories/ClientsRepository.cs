@@ -43,5 +43,9 @@ namespace licensemanager.Repositories
             };
         }
 
+        public bool ExistByName(string name)
+        {
+            return _context.Clients.FirstOrDefault(x => x.Name.Equals(name)) != null;
+        }
     }
 }

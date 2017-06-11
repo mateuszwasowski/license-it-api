@@ -59,7 +59,7 @@ namespace licensemanager.Classes
 
         public static Exception ValidateLicenseAdd(LicenseModel dataToAdd)
         {
-            if(dataToAdd.IdClients <=0)
+            if(dataToAdd.IdClient <=0)
                 return new Exception("Id Client is required");
 
             if (dataToAdd.IdApplication <= 0)
