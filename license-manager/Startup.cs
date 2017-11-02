@@ -64,6 +64,17 @@ namespace licensemanager
 
             services.AddDbContext<DataBaseContext>(options => options.UseMySQL(connectionString));
 
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    x => x.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
+
+            services.AddMvc();
 
             services.Configure<IdentityOptions>(config =>
                 {
@@ -83,16 +94,6 @@ namespace licensemanager
                             }
                         };
                 });
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    x => x.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
-
-            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -179,6 +180,20 @@ namespace licensemanager
                 AutomaticChallenge = true,
                 AuthenticationScheme = "Cookie",
                 CookieName = "token",
+                Events = new CookieAuthenticationEvents
+                        {
+                            OnRedirectToLogin = ctx =>
+                            {
+                                if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
+                                {
+                                    ctx.Response.StatusCode = 401;
+                                    return Task.FromResult<object>(null);
+                                }
+                
+                                ctx.Response.Redirect(ctx.RedirectUri);
+                                return Task.FromResult<object>(null);
+                            }
+                        },
                 TicketDataFormat = new CustomJwtDataFormat(
                     SecurityAlgorithms.HmacSha256,
                     tokenValidationParameters),
