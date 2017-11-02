@@ -5,11 +5,13 @@ using licensemanager.Model.DataBaseModel;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
 using licensemanager.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace licensemanager.Controllers
 {
     [Produces("application/json")]
+    [Authorize]
     public class ApplicationsController : Controller
     {
         // GET: api/Applications/Get

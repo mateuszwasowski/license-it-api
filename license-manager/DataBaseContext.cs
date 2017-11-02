@@ -31,6 +31,9 @@ namespace licensemanager
 
         public DbSet<Permissions> Permissions { get; set; }
 
+        public DbSet<Group> Group { get; set; }
+        
+        public DbSet<UserGroup> UserGroup { get; set; }
     }
 }
 

@@ -9,8 +9,7 @@ namespace licensemanager.Settings
     {
         public static void Initialize(DataBaseContext context)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            
 
             UsersRecords(context);
             UserGroupsRecords(context);
