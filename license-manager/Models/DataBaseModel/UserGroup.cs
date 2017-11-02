@@ -1,0 +1,19 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace licensemanager.Model.DataBaseModel
+{
+    public class UserGroup
+    {
+        [Key]
+        public int Id { get; set; }
+        
+        [ForeignKey("User")]
+        public int IdUser { get; set; } //Foreign key for User
+
+        [ForeignKey("Group")]
+        public int IdGroup { get; set; } //Foreign key for Group
+       
+    }
+}

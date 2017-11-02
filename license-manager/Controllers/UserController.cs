@@ -16,12 +16,14 @@ namespace licensemanager.Controllers
     [Authorize]
     public class UserController : Controller
     {
+
+        public IUserRepository userRepo {get;set;} = new UserRepository(new DataBaseContext());
+
         // GET: api/User/Get
         [HttpGet]
         [Route("api/User/Get")]
         public IEnumerable<UserModel> Get()
         {
-            IUserRepository userRepo = new UserRepository(new DataBaseContext());
             return userRepo.Get().Where(x => !x.IsDelete).Select(x => new UserModel
             {
                 Id = x.Id,
@@ -43,8 +45,6 @@ namespace licensemanager.Controllers
 
             try
             {
-                IUserRepository userRepo = new UserRepository(new DataBaseContext());
-
                 var user = userRepo.GetById(id);
 
                 if (user == null || user.IsDelete)
@@ -85,8 +85,6 @@ namespace licensemanager.Controllers
             var response = new ResponseModel<UserModel>();
             try
             {
-                IUserRepository userRepo = new UserRepository(new DataBaseContext());
-
                 if (string.IsNullOrEmpty(value?.Email))
                 {
                     response.Status = 200;
@@ -148,8 +146,6 @@ namespace licensemanager.Controllers
                     return response;
                 }
 
-                IUserRepository userRepo = new UserRepository(new DataBaseContext());
-
                 var user = userRepo.GetById(userModel.Id);
 
                 user.IsDelete = true;
@@ -192,8 +188,6 @@ namespace licensemanager.Controllers
                     response.Data = false;
                     return response;
                 }
-
-                IUserRepository userRepo = new UserRepository(new DataBaseContext());
 
                 var user = userRepo.GetById(userModel.Id);
 

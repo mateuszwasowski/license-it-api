@@ -13,6 +13,7 @@ namespace licensemanager.Settings
             context.Database.EnsureCreated();
 
             UsersRecords(context);
+            UserGroupsRecords(context);
             ApplicationsRecords(context);
             ClientsRecords(context);
             LicensesRecords(context);
@@ -22,7 +23,6 @@ namespace licensemanager.Settings
         
         private static void UsersRecords(DataBaseContext context)
         {
-            // Look for any students.
             if (context.Users.Any())
             {
                 return;
@@ -45,9 +45,49 @@ namespace licensemanager.Settings
             context.SaveChanges();
         }
 
+         private static void UserGroupsRecords(DataBaseContext context)
+        {
+            if (context.UserGroup.Any())
+            {
+                return;
+            }
+
+            var userGroup = new UserGroup
+            {
+                Id = 1,
+                IdUser = 1,
+                IdGroup = 1
+            };
+
+            context.UserGroup.Add(userGroup);
+
+            context.SaveChanges();
+        }
+
+         private static void GroupsRecords(DataBaseContext context)
+        {
+            if (context.Group.Any())
+            {
+                return;
+            }
+
+            var group = new Group
+            {
+                Id = 1,
+                Name = "Test",
+                Description = "Test description",
+                Date = DateTime.Now,
+                IsActive = true,
+                IsDelete = false,
+            };
+
+            context.Group.Add(group);
+
+            context.SaveChanges();
+        }
+
         private static void LicensesRecords(DataBaseContext context)
         {
-            // Look for any students.
             if (context.Licenses.Any())
             {
                 return;
