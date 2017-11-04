@@ -14,5 +14,34 @@ namespace licensemanager.Repositories
         {
             _context = context;
         }
+
+        public bool ExistByName(string name)
+        {
+            return _context.Group.FirstOrDefault(x=>x.Name.Equals(name)) !=null;
+        }
+
+        public GroupModel GetGroupModelById(int id)
+        {
+            return _context.Group.Select(x=> new GroupModel{
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                IsActive = x.IsActive,
+                IsDelete = x.IsDelete,
+                Date = x.Date
+            }).FirstOrDefault(x=>x.Id == id);
+        }
+
+        public IEnumerable<GroupModel> GetGroupsModel()
+        {
+            return _context.Group.Select(x=> new GroupModel{
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                IsActive = x.IsActive,
+                IsDelete = x.IsDelete,
+                Date = x.Date
+            });
+        }
     }
 }

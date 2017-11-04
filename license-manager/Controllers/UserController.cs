@@ -17,14 +17,14 @@ namespace licensemanager.Controllers
     public class UserController : Controller
     {
 
-        public IUserRepository userRepo {get;set;} = new UserRepository(new DataBaseContext());
+        public IUserRepository UserRepo {get;set;} = new UserRepository(new DataBaseContext());
 
         // GET: api/User/Get
         [HttpGet]
         [Route("api/User/Get")]
         public IEnumerable<UserModel> Get()
         {
-            return userRepo.Get().Where(x => !x.IsDelete).Select(x => new UserModel
+            return UserRepo.Get().Where(x => !x.IsDelete).Select(x => new UserModel
             {
                 Id = x.Id,
                 FirstName = x.FirstName,
@@ -45,7 +45,7 @@ namespace licensemanager.Controllers
 
             try
             {
-                var user = userRepo.GetById(id);
+                var user = UserRepo.GetById(id);
 
                 if (user == null || user.IsDelete)
                 {
@@ -92,7 +92,7 @@ namespace licensemanager.Controllers
                     return response;
                 }
 
-                if (userRepo.ExistUserByEmail(value.Email))
+                if (UserRepo.ExistUserByEmail(value.Email))
                 {
                     response.Status = 200;
                     response.Description = "This user already exist";
@@ -111,7 +111,7 @@ namespace licensemanager.Controllers
                     IsActive = value.IsActive
                 };
 
-                userRepo.Insert(user);
+                UserRepo.Insert(user);
 
                 value.Id = user.Id;
                 value.Password = null;
@@ -146,12 +146,12 @@ namespace licensemanager.Controllers
                     return response;
                 }
 
-                var user = userRepo.GetById(userModel.Id);
+                var user = UserRepo.GetById(userModel.Id);
 
                 user.IsDelete = true;
 
 
-                if (userRepo.Update(user))
+                if (UserRepo.Update(user))
                 {
                     response.Status = 200;
                     response.Description = "OK";
@@ -188,19 +188,30 @@ namespace licensemanager.Controllers
                     response.Data = false;
                     return response;
                 }
+                var user = UserRepo.GetById(userModel?.Id ?? 0);
 
-                var user = userRepo.GetById(userModel.Id);
+                if (user == null)
+                    throw new Exception("User not found");
 
                 if (!string.IsNullOrEmpty(userModel.Password))
                     user.Password = CryptoClass.CreateHash(userModel.Password);
 
-                user.IsDelete = userModel.IsDelete;
-                user.IsActive = userModel.IsActive;
-                user.Email = userModel.Email;
-                user.FirstName = userModel.FirstName;
-                user.LastName = userModel.LastName;
+                if(userModel.IsDelete != null)
+                    user.IsDelete = userModel.IsDelete;
+                
+                if(userModel.IsActive !=null)
+                    user.IsActive = userModel.IsActive;
 
-                if (userRepo.Update(user))
+                if(userModel.Email !=null)
+                    user.Email = userModel.Email;
+
+                if(userModel.FirstName !=null)
+                    user.FirstName = userModel.FirstName;
+
+                if(userModel.LastName !=null)
+                    user.LastName = userModel.LastName;
+
+                if (UserRepo.Update(user))
                 {
                     response.Status = 200;
                     response.Description = "OK";

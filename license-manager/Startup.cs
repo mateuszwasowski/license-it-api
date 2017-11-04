@@ -45,7 +45,6 @@ namespace licensemanager
 
             services.AddDbContext<DataBaseContext>(options => options.UseMySQL(connectionString));
 
-            
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

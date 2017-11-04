@@ -99,7 +99,7 @@ namespace licensemanager.Settings
                 AssignedVersion = 1,
                 IdClients = 1,
                 Creation = DateTime.Now,
-                Expiration = DateTime.MaxValue,
+                Expiration = DateTime.Now.AddDays(100),
                 Inclusion = DateTime.Now,
                 IsActivated = false,
                 Number = "1111-1111-1111-1111",

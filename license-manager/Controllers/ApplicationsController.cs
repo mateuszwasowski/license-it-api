@@ -158,7 +158,7 @@ namespace licensemanager.Controllers
             return resp;
         }
 
-        // DELETE: api/ApiWithActions/Delete
+        // DELETE: api/Applications/Delete
         [HttpDelete]
         [Route("api/Applications/Delete")]
         public ResponseModel<bool> Delete([FromBody]int id)

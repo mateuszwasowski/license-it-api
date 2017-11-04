@@ -11,6 +11,8 @@ namespace licensemanager.Repositories.Interfaces
         bool Insert(TEntity entity);
 
         bool Update(TEntity entityToUpdate);
+        
+        bool Delete(TEntity entityToUpdate);
 
     }
 }

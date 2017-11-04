@@ -9,7 +9,6 @@ namespace licensemanager.Classes
 {
     public static class LicenseClass
     {
-
         public static string GetNewLicenseString()
         {
             var stringVal = RandomString(24);
@@ -21,7 +20,6 @@ namespace licensemanager.Classes
 
             return stringVal;
         }
-
 
         private static string RandomString(int length)
         {

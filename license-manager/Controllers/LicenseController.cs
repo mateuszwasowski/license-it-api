@@ -305,7 +305,7 @@ namespace licensemanager.Controllers
                 var id = licenseModel.Id;
 
                 if (id <= 0)
-                    throw new Exception("id_license <= 0");
+                    throw new Exception("Id license <= 0");
 
                 ILicenseRepository repo = new LicenseRepository(new DataBaseContext());
                 resp.Data =  repo.EditLicense(id, licenseModel);

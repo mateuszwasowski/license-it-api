@@ -30,3 +30,13 @@ C:\PROJEKTY\c#\licenseItPro\license-it-api\license-manager\bin\Debug\netcoreapp1
 C:\PROJEKTY\c#\licenseItPro\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.pdb
 C:\PROJEKTY\c#\licenseItPro\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.csproj.CoreCompileInputs.cache
 C:\PROJEKTY\c#\licenseItPro\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.AssemblyInfoInputs.cache
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\appsettings.json
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.deps.json
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.runtimeconfig.json
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.runtimeconfig.dev.json
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.dll
+C:\Projects\licenseIt\license-it-api\license-manager\bin\Debug\netcoreapp1.1\licensemanager.pdb
+C:\Projects\licenseIt\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.csprojResolveAssemblyReference.cache
+C:\Projects\licenseIt\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.AssemblyInfo.cs
+C:\Projects\licenseIt\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.dll
+C:\Projects\licenseIt\license-it-api\license-manager\obj\Debug\netcoreapp1.1\licensemanager.pdb
