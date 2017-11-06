@@ -13,7 +13,6 @@ namespace licensemanager
         public string Issuer { get; set; }
         
         public string Audience { get; set; }
-        
         public TimeSpan Expiration { get; set; } = TimeSpan.FromMinutes(5040);
         
         public SigningCredentials SigningCredentials { get; set; }

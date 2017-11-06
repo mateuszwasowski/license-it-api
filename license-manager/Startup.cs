@@ -190,9 +190,14 @@ namespace licensemanager
             if (user == null)
                 return Task.FromResult<ClaimsIdentity>(null);
 
-            if (CryptoClass.CheckPassword(password, user.Password))
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(user.Email, "Token"), new Claim[] { }));
+            if (CryptoClass.CheckPassword(password, user.Password)){
+                var identity = new ClaimsIdentity(new GenericIdentity(user.Id.ToString(), "Token"));
 
+                identity.AddClaim(new Claim("userId",(user?.Id??0).ToString()));
+                identity.AddClaim(new Claim("userMail",user.Email));
+
+                return Task.FromResult(identity);
+            }
             return Task.FromResult<ClaimsIdentity>(null);
         }
     }

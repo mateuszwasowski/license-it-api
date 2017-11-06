@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -68,11 +69,15 @@ namespace licensemanager
 
             var now = DateTime.UtcNow;
 
+            var userId = identity.Claims.FirstOrDefault(x=>x.Type.Equals("userId"))?.Value;
+            var userMail = identity.Claims.FirstOrDefault(x=>x.Type.Equals("userMail"))?.Value;
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
-                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
+                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64),
+                new Claim("userId", userId),
+                new Claim("userMail", userMail)
             };
 
             var jwt = new JwtSecurityToken(
