@@ -7,6 +7,7 @@ namespace licensemanager.Model.DataBaseModel
     public class UserGroup
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [ForeignKey("User")]
@@ -14,6 +15,7 @@ namespace licensemanager.Model.DataBaseModel
 
         [ForeignKey("Group")]
         public int IdGroup { get; set; } //Foreign key for Group
+        
        
     }
 }

@@ -9,6 +9,7 @@ namespace licensemanager.Repositories
     {
         IEnumerable<ClientsModel> GetClientsModel();
         ClientsModel GetClientsModelById(int id);
-        bool ExistByName(string name);
+        bool ExistByName(int idGroup, string name);
+        IEnumerable<ClientsModel> GetClientsModel(int idGroup);
     }
 }

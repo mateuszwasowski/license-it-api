@@ -8,6 +8,7 @@ namespace licensemanager.Model.DataBaseModel
     public class Licenses
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [ForeignKey("Application")]

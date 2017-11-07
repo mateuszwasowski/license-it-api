@@ -15,5 +15,11 @@ namespace licensemanager.Models.AppModel
 
         [DataMember(Name = "idGroup")]
         public int IdGroup { get; set; }
+        
+        [DataMember(Name = "groupName")]
+        public string GroupName { get; set; }
+        
+        [DataMember(Name = "groupLogoUrl")]
+        public string GroupLogoUrl { get; set; }
     }
 }

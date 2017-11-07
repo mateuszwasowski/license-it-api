@@ -49,6 +49,41 @@ namespace licensemanager.Controllers
             return resp;
         }
 
+        // GET: api/Clients/GetByGroup/{idGroup}
+        [HttpGet]
+        [Route("api/Clients/GetByGroup/{idGroup}")]
+        public ResponseModel<IEnumerable<ClientsModel>> Get(int idGroup)
+        {
+            var resp = new ResponseModel<IEnumerable<ClientsModel>>();
+
+            try
+            {
+                IClientsRepository appRepo = new ClientsRepository(new DataBaseContext());
+                var appList = appRepo.GetClientsModel(idGroup);
+
+                if (appList != null && appList.Any())
+                {
+                    resp.Data = appList;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                }
+                else
+                {
+                    resp.Status = 200;
+                    resp.Description = "No clients";
+                    resp.Data = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = null;
+            }
+
+            return resp;
+        }
+
         // GET: api/Clients/GetById/5
         [HttpGet]
         [Route("api/Clients/GetById/{id}")]
@@ -105,11 +140,12 @@ namespace licensemanager.Controllers
                     IsActive = dataToAdd.IsActive,
                     Creation = DateTime.Now,
                     Updated = DateTime.Now,
+                    IdGroup = dataToAdd.IdGroup
                 };
 
                 IClientsRepository appRepo = new ClientsRepository(new DataBaseContext());
                 
-                if (appRepo.ExistByName(model.Name))
+                if (appRepo.ExistByName(model.IdGroup, model.Name))
                     throw new Exception("Client already exist");
 
                 if (appRepo.Insert(model))

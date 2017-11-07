@@ -11,6 +11,8 @@ namespace licensemanager.Models.AppModel
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
+        [DataMember(Name = "idUserCreator")]
+        public int IdUserCreator { get; set; }
         [DataMember(Name = "name")]
         public string Name { get; set; }
         [DataMember(Name = "description")]
@@ -21,5 +23,7 @@ namespace licensemanager.Models.AppModel
         public bool IsDelete { get; set; }
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
+        [DataMember(Name = "logoUrl")]
+        public string LogoUrl { get; set; }
     }
 }

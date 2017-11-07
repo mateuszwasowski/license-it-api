@@ -28,7 +28,8 @@ namespace licensemanager.Repositories
                 Description = x.Description,
                 IsActive = x.IsActive,
                 IsDelete = x.IsDelete,
-                Date = x.Date
+                Date = x.Date,
+                IdUserCreator = x.IdUserCreator
             }).FirstOrDefault(x=>x.Id == id);
         }
 
@@ -40,7 +41,8 @@ namespace licensemanager.Repositories
                 Description = x.Description,
                 IsActive = x.IsActive,
                 IsDelete = x.IsDelete,
-                Date = x.Date
+                Date = x.Date,
+                IdUserCreator = x.IdUserCreator
             });
         }
     }

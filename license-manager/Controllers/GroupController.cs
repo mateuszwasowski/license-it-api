@@ -107,11 +107,13 @@ namespace licensemanager.Controllers
                     Description = dataToAdd.Description,
                     IsActive = dataToAdd.IsActive,
                     IsDelete = dataToAdd.IsDelete,
-                    Date = dataToAdd.Date
+                    Date = dataToAdd.Date,
+                    LogoUrl = dataToAdd.LogoUrl,
+                    IdUserCreator = dataToAdd.IdUserCreator
                 };
 
-                if (AppRepo.ExistByName(model.Name))
-                    throw new Exception("Group already exist");
+                //if (AppRepo.ExistByName(model.Name))
+                    //throw new Exception("Group already exist");
 
                 if (AppRepo.Insert(model))
                 {

@@ -15,6 +15,7 @@ namespace licensemanager.Controllers
     [Authorize]
     public class LicenseController : Controller
     {
+        
         // GET: api/License/Get
         [HttpGet]
         [Route("api/License/Get")]
@@ -88,7 +89,7 @@ namespace licensemanager.Controllers
         // GET: api/License/Get
         [HttpGet]
         [Route("api/License/Get/{id}")]
-        public ResponseModel<LicenseModel> GetByIdn(int id)
+        public ResponseModel<LicenseModel> GetById(int id)
         {
             var resp = new ResponseModel<LicenseModel>();
 

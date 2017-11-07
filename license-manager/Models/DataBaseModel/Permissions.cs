@@ -6,6 +6,7 @@ namespace licensemanager.Model.DataBaseModel
     public class Permissions
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [ForeignKey("License")]

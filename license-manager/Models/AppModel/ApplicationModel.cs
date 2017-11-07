@@ -9,6 +9,9 @@ namespace licensemanager.Models.AppModel
         [Key]
         [DataMember(Name = "id")]
         public int Id { get; set; }
+        
+        [DataMember(Name = "idGroup")]
+        public int IdGroup { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }

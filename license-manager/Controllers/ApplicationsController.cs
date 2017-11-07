@@ -49,6 +49,41 @@ namespace licensemanager.Controllers
             return resp;
         }
 
+         // GET: api/Applications/GetByGroup
+        [HttpGet]
+        [Route("api/Applications/GetByGroup/{idGroup}")]
+        public ResponseModel<IEnumerable<ApplicationModel>> GetByGroup(int idGroup)
+        {
+            var resp = new ResponseModel<IEnumerable<ApplicationModel>>();
+
+            try
+            {
+                IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());
+                var appList = appRepo.GetApplicationModel(idGroup);
+
+                if (appList != null && appList.Any())
+                {
+                    resp.Data = appList;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                }
+                else
+                {
+                    resp.Status = 200;
+                    resp.Description = "No applications";
+                    resp.Data = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = null;
+            }
+
+            return resp;
+        }
+
         // GET: api/Applications/GetById
         [HttpGet]
         [Route("api/Applications/GetById/{id}")]
@@ -107,7 +142,8 @@ namespace licensemanager.Controllers
                     Name = dataToAdd.Name,
                     IsActive = dataToAdd.IsActive,
                     Version = dataToAdd.Version,
-                    Creation = DateTime.Now
+                    Creation = DateTime.Now,
+                    IdGroup = dataToAdd.IdGroup
                 };
 
                 IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());

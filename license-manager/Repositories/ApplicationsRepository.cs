@@ -23,7 +23,22 @@ namespace licensemanager.Repositories
                 Id = x.Id,
                 Version = x.Version,
                 Creation = x.Creation,
-                Description = x.Description
+                Description = x.Description,
+                IdGroup = x.IdGroup
+            });
+        }
+
+        public IEnumerable<ApplicationModel> GetApplicationModel(int idGroup)
+        {
+            return _context.Application.Where(x=>x.IdGroup==idGroup).Select(x => new ApplicationModel()
+            {
+                Name = x.Name,
+                IsActive = x.IsActive,
+                Id = x.Id,
+                Version = x.Version,
+                Creation = x.Creation,
+                Description = x.Description,
+                IdGroup = x.IdGroup
             });
         }
 
@@ -41,7 +56,8 @@ namespace licensemanager.Repositories
                 Id = app.Id,
                 Version = app.Version,
                 Creation = app.Creation,
-                Description = app.Description
+                Description = app.Description,
+                IdGroup = app.IdGroup
             };
         }
 

@@ -9,7 +9,8 @@ namespace licensemanager.Settings
     {
         public static void Initialize(DataBaseContext context)
         {
-            
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             UsersRecords(context);
             UserGroupsRecords(context);
@@ -36,7 +37,7 @@ namespace licensemanager.Settings
                 Password = CryptoClass.CreateHash("test"),
                 Date = DateTime.Now,
                 IsActive = true,
-                IsDelete = false,
+                IsDelete = false
             };
 
             context.Users.Add(users);
@@ -78,6 +79,8 @@ namespace licensemanager.Settings
                 Date = DateTime.Now,
                 IsActive = true,
                 IsDelete = false,
+                IdUserCreator = 1,
+                LogoUrl = "some URL"
             };
 
             context.Group.Add(group);
@@ -125,8 +128,8 @@ namespace licensemanager.Settings
                 Creation = DateTime.Now,
                 Description = "opis",
                 Name = "testowa apka",
-                Version = (decimal)1.0
-
+                Version = (decimal)1.0,
+                IdGroup = 1
             };
 
             context.Application.Add(app);
@@ -165,7 +168,8 @@ namespace licensemanager.Settings
                Creation = DateTime.Now,
                IsActive = true,
                Updated = DateTime.Now,
-               Name = "UAM"
+               Name = "UAM",
+               IdGroup = 1,
             };
 
             context.Clients.Add(clients);

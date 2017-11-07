@@ -17,30 +17,42 @@ namespace licensemanager.Repositories
 
         public bool Exist(int idUser, int idGroup)
         {
-            return _context.UserGroup.FirstOrDefault(x=>x.IdGroup == idGroup && x.IdUser == idUser)!=null;
+            return _context.UserGroup.FirstOrDefault(x => x.IdGroup == idGroup && x.IdUser == idUser) != null;
         }
 
         public UserGroup GetByIdUserIdGroup(int idUser, int idGroup)
         {
-            return _context.UserGroup.FirstOrDefault(x=>x.IdGroup == idGroup && x.IdUser == idUser);
+            return _context.UserGroup.FirstOrDefault(x => x.IdGroup == idGroup && x.IdUser == idUser);
         }
 
         public IEnumerable<UserGroupModel> GetUserGroupModelByIdGroup(int id)
         {
-            return _context.UserGroup.Where(x=>x.IdGroup == id).Select(x=> new UserGroupModel{
-                Id = x.Id,
-                IdUser = x.IdUser,
-                IdGroup = x.IdGroup
-            });
+             return from userGroup in _context.UserGroup
+                   join groupObj in _context.Group on userGroup.IdGroup equals groupObj.Id
+                   where userGroup.IdGroup == id
+                   select new UserGroupModel
+                   {
+                       Id = userGroup.Id,
+                       IdUser = userGroup.IdUser,
+                       IdGroup = userGroup.IdGroup,
+                       GroupLogoUrl = groupObj!=null ? groupObj.LogoUrl : "",
+                       GroupName = groupObj!=null ? groupObj.Name : ""
+                   };
         }
 
         public IEnumerable<UserGroupModel> GetUserGroupModelByIdUser(int id)
         {
-            return _context.UserGroup.Where(x=>x.IdUser == id).Select(x=> new UserGroupModel{
-                Id = x.Id,
-                IdUser = x.IdUser,
-                IdGroup = x.IdGroup
-            });
+            return from userGroup in _context.UserGroup
+                   join groupObj in _context.Group on userGroup.IdGroup equals groupObj.Id
+                   where userGroup.IdUser == id
+                   select new UserGroupModel
+                   {
+                       Id = userGroup.Id,
+                       IdUser = userGroup.IdUser,
+                       IdGroup = userGroup.IdGroup,
+                       GroupLogoUrl = groupObj!=null ? groupObj.LogoUrl : "",
+                       GroupName = groupObj!=null ? groupObj.Name : ""
+                   };
         }
     }
 }

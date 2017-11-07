@@ -9,5 +9,6 @@ namespace licensemanager.Repositories
     {
         IEnumerable<ApplicationModel> GetApplicationModel();
         ApplicationModel GetApplicationModelById(int id);
+        IEnumerable<ApplicationModel> GetApplicationModel(int idGroup);
     }
 }
