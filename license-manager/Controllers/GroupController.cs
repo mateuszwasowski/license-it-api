@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace licensemanager.Controllers
 {
     [Produces("application/json")]
-    [AllowAnonymous]
+    [Authorize]
     public class GroupController : Controller
     {
         public IGroupRepository AppRepo { get; set; } = new GroupRepository(new DataBaseContext());
-
+        public IUserGroupRepository UserGroupRepo { get; set; } = new UserGroupRepository(new DataBaseContext());
         // GET: api/Groups/Get
         [HttpGet]
         [Route("api/Groups/Get")]
@@ -112,14 +112,28 @@ namespace licensemanager.Controllers
                     IdUserCreator = dataToAdd.IdUserCreator
                 };
 
-                //if (AppRepo.ExistByName(model.Name))
-                    //throw new Exception("Group already exist");
+                if(string.IsNullOrEmpty(model?.LogoUrl)){
+                    model.LogoUrl = string.Empty;
+                }
 
                 if (AppRepo.Insert(model))
                 {
-                    resp.Data = model.Id;
-                    resp.Status = 200;
-                    resp.Description = "OK";
+                    var modelUg = new UserGroup()
+                    {
+                        IdUser = model.IdUserCreator,
+                        IdGroup = model.Id
+                    };
+
+                    if (UserGroupRepo.Insert(modelUg))
+                    {
+                        resp.Data = model.Id;
+                        resp.Status = 200;
+                        resp.Description = "OK";
+                    }
+                    else
+                    {
+                        throw new Exception("Not inserted user to group");
+                    }
                 }
                 else
                 {
@@ -153,20 +167,20 @@ namespace licensemanager.Controllers
                 if (groupObj != null)
                 {
                     groupObj.Id = applicationData.Id;
-                    
-                    if(applicationData.Name !=null)
+
+                    if (applicationData.Name != null)
                         groupObj.Name = applicationData.Name;
 
-                    if(applicationData.Description !=null)
+                    if (applicationData.Description != null)
                         groupObj.Description = applicationData.Description;
 
-                    if(applicationData.IsActive !=null)
+                    if (applicationData.IsActive != null)
                         groupObj.IsActive = applicationData.IsActive;
 
-                    if(applicationData.IsDelete !=null)
+                    if (applicationData.IsDelete != null)
                         groupObj.IsDelete = applicationData.IsDelete;
 
-                    if(applicationData.Date !=null)
+                    if (applicationData.Date != null)
                         groupObj.Date = applicationData.Date;
 
                     AppRepo.Update(groupObj);
