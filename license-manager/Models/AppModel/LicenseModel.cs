@@ -49,6 +49,12 @@ namespace licensemanager.Models.AppModel
 
         [DataMember(Name = "applicationModel")]
         public virtual ApplicationModel ApplicationModel { get; set; }
+
+        [DataMember(Name = "lastCheck")]
+        public DateTime? LastCheck { get; set; }
+        
+        [DataMember(Name = "lastCheckIdentityNumber")]
+        public string LastCheckIdentityNumber { get; set; }
     }
 
 }

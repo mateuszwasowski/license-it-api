@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace licensemanager.Model.DataBaseModel
+namespace licensemanager.Models.DataBaseModel
 {
     public class Licenses
     {
@@ -25,6 +25,8 @@ namespace licensemanager.Model.DataBaseModel
         public DateTime Creation { get; set; }
         public DateTime? Inclusion { get; set; }
         public DateTime? Expiration { get; set; }
+        public DateTime? LastCheck { get; set; }
+        public string LastCheckIdentityNumber { get; set; }
 
         public virtual IEnumerable<Permissions> Permissions { get; set; }
         public virtual Application Application { get; set; }

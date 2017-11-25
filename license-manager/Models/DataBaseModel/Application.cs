@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace licensemanager.Model.DataBaseModel
+namespace licensemanager.Models.DataBaseModel
 {
     public class Application
     {
@@ -16,6 +16,7 @@ namespace licensemanager.Model.DataBaseModel
         public decimal Version { get; set; }
         public bool IsActive { get; set; }
         public string Description { get; set; }
+        public string Hash { get; set; }
         public DateTime Creation { get; set; }
     }
 }

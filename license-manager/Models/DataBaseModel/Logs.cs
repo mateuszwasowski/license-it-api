@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace licensemanager.Models.DataBaseModel
 {
-    public class Group
+    public class Logs
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [ForeignKey("User")]
-        public int IdUserCreator { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDelete { get; set; }
+
+        public string LicenseNumber { get; set; }
+
         public DateTime Date { get; set; }
-        public string LogoUrl { get; set; }
+
+        public string Description { get; set; }
     }
 }

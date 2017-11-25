@@ -24,7 +24,6 @@ namespace licensemanager
             ILoggerFactory loggerFactory)
         {
             _next = next;
-            _logger = loggerFactory.CreateLogger<TokenProviderMiddleware>();
 
             _options = options.Value;
             ThrowIfInvalidOptions(_options);
@@ -48,12 +47,15 @@ namespace licensemanager
                 context.Response.StatusCode = 400;
                 return context.Response.WriteAsync("Bad request.");
             }
-
-            _logger.LogInformation("Handling request: " + context.Request.Path);
-
+            
+            //if ((bool) context.Request?.Form["granttype"].Equals("refresh_token"))
+            //{
+            //    return RefreshToken(context);
+            //}
+           
             return GenerateToken(context);
         }
-
+        
         private async Task GenerateToken(HttpContext context)
         {
             var username = context.Request?.Form["username"];
@@ -94,6 +96,55 @@ namespace licensemanager
                 status = "OK",
                 token = encodedJwt,
                 expires_in = (int) _options.Expiration.TotalSeconds
+            };
+
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
+        }
+
+        private async Task RefreshToken(HttpContext context)
+        {
+            var username = context.Request?.Form["username"];
+            var password = context.Request?.Form["password"];
+
+            var identity = await _options.IdentityResolver(username, password);
+            if (identity == null)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync("Invalid username or password.");
+                return;
+            }
+
+            var now = DateTime.UtcNow;
+
+            var userId = identity.Claims.FirstOrDefault(x => x.Type.Equals("userId"))?.Value;
+            var userMail = identity.Claims.FirstOrDefault(x => x.Type.Equals("userMail"))?.Value;
+            //var refreshToken = identity.Claims.FirstOrDefault(x => x.Type.Equals("refreshToken"))?.Value;
+
+            var claims = new Claim[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userId),
+                new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
+                new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64),
+                new Claim("userId", userId),
+                new Claim("userMail", userMail),
+               // new Claim("refresh_token", refreshToken)
+            };
+
+            var jwt = new JwtSecurityToken(
+                issuer: _options.Issuer,
+                audience: _options.Audience,
+                claims: claims,
+                notBefore: now,
+                expires: now.Add(_options.Expiration),
+                signingCredentials: _options.SigningCredentials);
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
+            {
+                status = "OK",
+                token = encodedJwt,
+                expires_in = (int)_options.Expiration.TotalSeconds
             };
 
             context.Response.ContentType = "application/json";

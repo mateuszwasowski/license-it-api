@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using licensemanager.Model.DataBaseModel;
+using licensemanager.Classes;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
+using licensemanager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,9 @@ namespace licensemanager.Controllers
     [Authorize]
     public class ApplicationsController : Controller
     {
+
+        IApplicationsRepository ApplicationsRepository = new ApplicationsRepository(new DataBaseContext());
+
         // GET: api/Applications/Get
         [HttpGet]
         [Route("api/Applications/Get")]
@@ -23,10 +28,10 @@ namespace licensemanager.Controllers
 
             try
             {
-                IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());
-                var appList = appRepo.GetApplicationModel();
+                
+                var appList = ApplicationsRepository.GetApplicationModel().ToList();
 
-                if (appList != null && appList.Any())
+                if (appList.Any())
                 {
                     resp.Data = appList;
                     resp.Status = 200;
@@ -58,10 +63,9 @@ namespace licensemanager.Controllers
 
             try
             {
-                IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());
-                var appList = appRepo.GetApplicationModel(idGroup);
+                var appList = ApplicationsRepository.GetApplicationModel(idGroup).ToList();
 
-                if (appList != null && appList.Any())
+                if (appList.Any())
                 {
                     resp.Data = appList;
                     resp.Status = 200;
@@ -93,8 +97,7 @@ namespace licensemanager.Controllers
 
             try
             {
-                IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());
-                var app = appRepo.GetApplicationModelById(id);
+                var app = ApplicationsRepository.GetApplicationModelById(id);
 
                 if (app != null)
                 {
@@ -133,7 +136,8 @@ namespace licensemanager.Controllers
                 {
                     resp.Data = 0;
                     resp.Status = 500;
-                    resp.Description = "Data is null";
+                    resp.Description = "no data";
+                    return resp;
                 }
 
                 var model = new Application()
@@ -143,12 +147,14 @@ namespace licensemanager.Controllers
                     IsActive = dataToAdd.IsActive,
                     Version = dataToAdd.Version,
                     Creation = DateTime.Now,
-                    IdGroup = dataToAdd.IdGroup
+                    IdGroup = dataToAdd.IdGroup,
+                    Hash = LicenseClass.RandomStringNoDash(32)
                 };
 
-                IApplicationsRepository appRepo = new ApplicationsRepository(new DataBaseContext());
+                if(ApplicationsRepository.CheckExitsForGroup(model))
+                    throw new Exception("Application already exits");
 
-                if(appRepo.Insert(model))
+                if(ApplicationsRepository.Insert(model))
                 {
                     resp.Data = model.Id;
                     resp.Status = 200;

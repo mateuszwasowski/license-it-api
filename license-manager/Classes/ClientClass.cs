@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
 using licensemanager.Repositories;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Classes
 {

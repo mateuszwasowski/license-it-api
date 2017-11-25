@@ -15,7 +15,10 @@ namespace licensemanager.Models.AppModel
 
         [DataMember(Name = "password")]
         public string Password { get; set; }
-        
+
+        [DataMember(Name = "oldPassword")]
+        public string OldPassword { get; set; }
+
         [DataMember(Name = "firstName")]
         public string FirstName { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using licensemanager.Model.DataBaseModel;
+﻿using licensemanager.Models.DataBaseModel;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Repositories
 {

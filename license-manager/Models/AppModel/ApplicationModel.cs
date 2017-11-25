@@ -25,6 +25,9 @@ namespace licensemanager.Models.AppModel
         [DataMember(Name = "description")]
         public string Description { get; set; }
 
+        [DataMember(Name = "hash")]
+        public string Hash { get; set; }
+
         [DataMember(Name = "creation")]
         public DateTime Creation { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace licensemanager.Model.DataBaseModel
+namespace licensemanager.Models.DataBaseModel
 {
     public class Permissions
     {

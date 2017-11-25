@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Repositories
 {
@@ -24,7 +25,8 @@ namespace licensemanager.Repositories
                 Version = x.Version,
                 Creation = x.Creation,
                 Description = x.Description,
-                IdGroup = x.IdGroup
+                IdGroup = x.IdGroup,
+                Hash = x.Hash
             });
         }
 
@@ -38,8 +40,17 @@ namespace licensemanager.Repositories
                 Version = x.Version,
                 Creation = x.Creation,
                 Description = x.Description,
-                IdGroup = x.IdGroup
+                IdGroup = x.IdGroup,
+                Hash = x.Hash
             });
+        }
+
+        public bool CheckExitsForGroup(Application model)
+        {
+            if (model == null)
+                return false;
+
+            return _context.Application.FirstOrDefault(x => x.Name.Equals(model.Name) && x.IdGroup.Equals(model.IdGroup)) != null;
         }
 
         public ApplicationModel GetApplicationModelById(int id)
@@ -57,7 +68,8 @@ namespace licensemanager.Repositories
                 Version = app.Version,
                 Creation = app.Creation,
                 Description = app.Description,
-                IdGroup = app.IdGroup
+                IdGroup = app.IdGroup,
+                Hash = app.Hash
             };
         }
 

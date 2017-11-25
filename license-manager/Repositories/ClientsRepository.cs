@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Repositories
 {

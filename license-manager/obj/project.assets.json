@@ -11678,6 +11678,9 @@
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
       "projectUniqueName": "C:\\PROJEKTY\\c#\\licenseItPro\\license-it-api\\license-manager\\licensemanager.csproj",
       "projectName": "licensemanager",
@@ -11711,48 +11714,56 @@
     "frameworks": {
       "netcoreapp1.1": {
         "dependencies": {
-          "Microsoft.NETCore.App": {
+          "MySql.Data.EntityFrameworkCore": {
             "target": "Package",
-            "version": "1.1.2",
-            "autoReferenced": true
-          },
-          "BCrypt.Net-Core": {
-            "target": "Package",
-            "version": "1.4.0"
-          },
-          "Microsoft.ApplicationInsights.AspNetCore": {
-            "target": "Package",
-            "version": "2.0.0"
-          },
-          "Microsoft.AspNetCore": {
-            "target": "Package",
-            "version": "1.1.1"
-          },
-          "Microsoft.AspNetCore.Authentication.JwtBearer": {
-            "target": "Package",
-            "version": "1.1.1"
-          },
-          "Microsoft.AspNetCore.Identity": {
-            "target": "Package",
-            "version": "1.1.1"
+            "version": "7.0.7-m61"
           },
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",
             "version": "1.1.1"
           },
-          "Microsoft.AspNetCore.Mvc": {
+          "Microsoft.AspNetCore": {
             "target": "Package",
             "version": "1.1.1"
           },
-          "Microsoft.AspNetCore.SpaServices": {
+          "Swashbuckle": {
+            "target": "Package",
+            "version": "6.0.0-beta902"
+          },
+          "Microsoft.Extensions.Logging.Debug": {
             "target": "Package",
             "version": "1.1.1"
           },
-          "Microsoft.AspNetCore.StaticFiles": {
+          "Webpack": {
             "target": "Package",
-            "version": "1.1.1"
+            "version": "4.0.0"
+          },
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+            "target": "Package",
+            "version": "1.1.0"
           },
           "Microsoft.EntityFrameworkCore.Design": {
+            "target": "Package",
+            "version": "1.1.1"
+          },
+          "BCrypt.Net-Core": {
+            "target": "Package",
+            "version": "1.4.0"
+          },
+          "SapientGuardian.EntityFrameworkCore.MySql": {
+            "target": "Package",
+            "version": "7.1.23"
+          },
+          "Microsoft.NETCore.App": {
+            "target": "Package",
+            "version": "1.1.2",
+            "autoReferenced": true
+          },
+          "Microsoft.VisualStudio.Web.BrowserLink": {
+            "target": "Package",
+            "version": "1.1.0"
+          },
+          "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "1.1.1"
           },
@@ -11764,33 +11775,25 @@
             "target": "Package",
             "version": "1.1.1"
           },
-          "Microsoft.Extensions.Logging.Debug": {
+          "Microsoft.AspNetCore.Mvc": {
             "target": "Package",
             "version": "1.1.1"
           },
-          "Microsoft.VisualStudio.Web.BrowserLink": {
+          "Microsoft.ApplicationInsights.AspNetCore": {
             "target": "Package",
-            "version": "1.1.0"
+            "version": "2.0.0"
           },
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+          "Microsoft.AspNetCore.SpaServices": {
             "target": "Package",
-            "version": "1.1.0"
+            "version": "1.1.1"
           },
-          "MySql.Data.EntityFrameworkCore": {
+          "Microsoft.AspNetCore.StaticFiles": {
             "target": "Package",
-            "version": "7.0.7-m61"
+            "version": "1.1.1"
           },
-          "SapientGuardian.EntityFrameworkCore.MySql": {
+          "Microsoft.AspNetCore.Identity": {
             "target": "Package",
-            "version": "7.1.23"
-          },
-          "Swashbuckle": {
-            "target": "Package",
-            "version": "6.0.0-beta902"
-          },
-          "Webpack": {
-            "target": "Package",
-            "version": "4.0.0"
+            "version": "1.1.1"
           }
         },
         "imports": [

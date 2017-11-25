@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Repositories
 {
@@ -34,8 +35,10 @@ namespace licensemanager.Repositories
                IsActivated = x.IsActivated,
                IdentityNumber = x.IdentityNumber,
                Expiration = x.Expiration,
-               ApplicationModel = ApplicationClass.ConvertPermission(x.Application)
-                
+               ApplicationModel = ApplicationClass.ConvertPermission(x.Application),
+               LastCheck = x.LastCheck,
+               LastCheckIdentityNumber = x.LastCheckIdentityNumber,
+
             });
         }
 

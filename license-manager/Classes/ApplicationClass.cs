@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Classes
 {
@@ -24,7 +25,9 @@ namespace licensemanager.Classes
                 Creation = x.Creation,
                 Id = x.Id,
                 Name = x.Name,
-                Version = x.Version
+                Version = x.Version,
+                IdGroup = x.IdGroup,
+                Hash = x.Hash
             });
         }
 
@@ -37,7 +40,9 @@ namespace licensemanager.Classes
                 Creation = x.Creation,
                 Id = x.Id,
                 Name = x.Name,
-                Version = x.Version
+                Version = x.Version,
+                IdGroup = x.IdGroup,
+                Hash = x.Hash
             });
         }
 
@@ -53,7 +58,9 @@ namespace licensemanager.Classes
                 Creation = data.Creation,
                 Id = data.Id,
                 Name = data.Name,
-                Version = data.Version
+                Version = data.Version,
+                IdGroup = data.IdGroup,
+                Hash = data.Hash
             };
         }
     }

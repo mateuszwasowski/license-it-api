@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
 using licensemanager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -16,8 +16,9 @@ namespace licensemanager.Controllers
     [Authorize]
     public class GroupController : Controller
     {
-        public IGroupRepository AppRepo { get; set; } = new GroupRepository(new DataBaseContext());
-        public IUserGroupRepository UserGroupRepo { get; set; } = new UserGroupRepository(new DataBaseContext());
+        private IGroupRepository AppRepo { get; set; } = new GroupRepository(new DataBaseContext());
+        private IUserGroupRepository UserGroupRepo { get; set; } = new UserGroupRepository(new DataBaseContext());
+
         // GET: api/Groups/Get
         [HttpGet]
         [Route("api/Groups/Get")]
@@ -27,9 +28,9 @@ namespace licensemanager.Controllers
 
             try
             {
-                var appList = AppRepo.GetGroupsModel();
+                var appList = AppRepo.GetGroupsModel().ToList();
 
-                if (appList != null && appList.Any())
+                if (appList.Any())
                 {
                     resp.Data = appList;
                     resp.Status = 200;
@@ -101,7 +102,7 @@ namespace licensemanager.Controllers
                     throw new Exception("Data is null");
                 }
 
-                var model = new Group()
+                var model = new Group
                 {
                     Name = dataToAdd.Name,
                     Description = dataToAdd.Description,
@@ -132,7 +133,7 @@ namespace licensemanager.Controllers
                     }
                     else
                     {
-                        throw new Exception("Not inserted user to group");
+                        throw new Exception("No user added to group");
                     }
                 }
                 else
@@ -160,7 +161,7 @@ namespace licensemanager.Controllers
             try
             {
                 if (applicationData == null)
-                    throw new Exception("Data is null");
+                    throw new Exception("no data");
 
                 var groupObj = AppRepo.GetById(applicationData.Id);
 

@@ -195,7 +195,8 @@ namespace licensemanager
 
                 identity.AddClaim(new Claim("userId",(user?.Id??0).ToString()));
                 identity.AddClaim(new Claim("userMail",user.Email));
-
+                //identity.AddClaim(new Claim("refreshToken", user.Email));
+                
                 return Task.FromResult(identity);
             }
             return Task.FromResult<ClaimsIdentity>(null);

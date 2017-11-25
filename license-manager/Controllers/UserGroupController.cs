@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
 using licensemanager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +29,7 @@ namespace licensemanager.Controllers
             {
                 var app = AppRepo.GetUserGroupModelByIdUser(id).ToList();
 
-                if (app != null)
+                if (app.Any())
                 {
                     resp.Data = app;
                     resp.Status = 200;
@@ -97,7 +97,7 @@ namespace licensemanager.Controllers
             {
                 if (dataToAdd == null)
                 {
-                    throw new Exception("Data is null");
+                    throw new Exception("no data");
                 }
 
                 var model = new UserGroup()
@@ -107,7 +107,7 @@ namespace licensemanager.Controllers
                 };
 
                 if (AppRepo.Exist(model.IdUser,model.IdGroup))
-                    throw new Exception("User in group already exist");
+                    throw new Exception("User already exist in the group");
 
                 if (AppRepo.Insert(model))
                 {

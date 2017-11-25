@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Model.DataBaseModel;
+using licensemanager.Models.DataBaseModel;
 
 namespace licensemanager.Settings
 {

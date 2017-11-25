@@ -1,7 +1,6 @@
-using licensemanager.Model.DataBaseModel;
-using licensemanager.Repositories.Interfaces;
+using licensemanager.Models.DataBaseModel;
 
-namespace licensemanager.Repositories
+namespace licensemanager.Repositories.Interfaces
 {
     public interface IPermissionsRepository : IRepository<Permissions>
     {

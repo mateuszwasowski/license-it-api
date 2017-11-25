@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
+using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Classes
 {
@@ -37,6 +38,23 @@ namespace licensemanager.Classes
                 {
                     builder.Append('-');
                 }
+            }
+            var number = builder.ToString().Substring(0, builder.Length - 1);
+
+            return number;
+        }
+
+        public static string RandomStringNoDash(int length)
+        {
+            var random = new Random();
+            const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuwxyz123456789!@#$%^&*()_+?><|}{-";
+            var stringVal = new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            var builder = new StringBuilder();
+            foreach (var currentChar in stringVal)
+            {
+                builder.Append(currentChar);
             }
             var number = builder.ToString().Substring(0, builder.Length - 1);
 

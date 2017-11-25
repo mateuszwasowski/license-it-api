@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using licensemanager.Classes;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models;
 using licensemanager.Models.AppModel;
+using licensemanager.Models.DataBaseModel;
 using licensemanager.Repositories;
 using licensemanager.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -85,7 +85,7 @@ namespace licensemanager.Controllers
             var response = new ResponseModel<UserModel>();
             try
             {
-                if (string.IsNullOrEmpty(value?.Email))
+                if (value == null || string.IsNullOrEmpty(value?.Email))
                 {
                     response.Status = 200;
                     response.Description = "Wrong data...";
@@ -193,14 +193,15 @@ namespace licensemanager.Controllers
                 if (user == null)
                     throw new Exception("User not found");
 
+                if(!user.Password.Equals(CryptoClass.CreateHash(userModel.OldPassword)))
+                    throw new Exception("User's password is incorrect");
+
                 if (!string.IsNullOrEmpty(userModel.Password))
                     user.Password = CryptoClass.CreateHash(userModel.Password);
 
-                if(userModel.IsDelete != null)
-                    user.IsDelete = userModel.IsDelete;
+                user.IsDelete = userModel.IsDelete;
                 
-                if(userModel.IsActive !=null)
-                    user.IsActive = userModel.IsActive;
+                user.IsActive = userModel.IsActive;
 
                 if(userModel.Email !=null)
                     user.Email = userModel.Email;

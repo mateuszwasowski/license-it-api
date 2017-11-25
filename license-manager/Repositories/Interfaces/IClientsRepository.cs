@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using licensemanager.Model.DataBaseModel;
 using licensemanager.Models.AppModel;
-using licensemanager.Repositories.Interfaces;
+using licensemanager.Models.DataBaseModel;
 
-namespace licensemanager.Repositories
+namespace licensemanager.Repositories.Interfaces
 {
     public interface IClientsRepository : IRepository<Clients>
     {
