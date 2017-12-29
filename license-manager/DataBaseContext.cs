@@ -33,10 +33,13 @@ namespace licensemanager
 
         public DbSet<Group> Group { get; set; }
         
+        public DbSet<GroupInvitations> GroupInvitations { get; set; }
+        
         public DbSet<UserGroup> UserGroup { get; set; }
 
         public DbSet<Logs> Logs { get; set; }
         
+        public DbSet<SettingsDb> SettingsDb { get; set; }
     }
 }
 

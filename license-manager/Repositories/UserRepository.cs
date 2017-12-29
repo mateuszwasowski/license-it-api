@@ -43,5 +43,24 @@ namespace licensemanager.Repositories
         {
             return _context.Users.FirstOrDefault(x => x.Email.Equals(email)) != null;
         }
+
+        public UserModel GetUserByEmail(string email)
+        {
+             var user = _context.Users.FirstOrDefault(x => x.Email.Equals(email));
+
+            if (user == null)
+                return null;
+
+            return new UserModel
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                Password = user.Password,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                IsActive = user.IsActive,
+                IsDelete = user.IsDelete
+            };
+        }
     }
 }

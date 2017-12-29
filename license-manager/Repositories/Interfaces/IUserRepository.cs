@@ -11,5 +11,6 @@ namespace licensemanager.Repositories.Interfaces
         UserModel GetActiveUserByEmailWithPass(string username);
 
         bool ExistUserByEmail(string email);
+        UserModel GetUserByEmail(string email);
     }
 }
