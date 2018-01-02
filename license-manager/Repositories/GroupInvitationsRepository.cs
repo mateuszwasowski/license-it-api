@@ -15,6 +15,11 @@ namespace licensemanager.Repositories
             _context = context;
         }
 
+        public bool Exist(GroupInvitationsModel dataToAdd)
+        {
+             return _context.GroupInvitations.FirstOrDefault(x=>x.GroupId == dataToAdd.GroupId && x.Email == dataToAdd.Email) != null;
+        }
+
         public GroupInvitations GetByToken(string token)
         {
            return _context.GroupInvitations.FirstOrDefault(x=>x.Token.Equals(token));

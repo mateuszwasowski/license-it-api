@@ -7,5 +7,6 @@ namespace licensemanager.Repositories.Interfaces
     public interface IGroupInvitationsRepository : IRepository<GroupInvitations>
     {
         GroupInvitations GetByToken(string token);
+        bool Exist(GroupInvitationsModel dataToAdd);
     }
 }
