@@ -29,7 +29,7 @@ namespace licensemanager.Repositories
         {
              return from userGroup in _context.UserGroup
                    join groupObj in _context.Group on userGroup.IdGroup equals groupObj.Id
-                   where userGroup.IdGroup == id
+                   where userGroup.IdGroup == id && groupObj.IsActive && !groupObj.IsDelete
                    select new UserGroupModel
                    {
                        Id = userGroup.Id,
@@ -44,7 +44,7 @@ namespace licensemanager.Repositories
         {
             return from userGroup in _context.UserGroup
                    join groupObj in _context.Group on userGroup.IdGroup equals groupObj.Id
-                   where userGroup.IdUser == id
+                   where userGroup.IdUser == id && groupObj.IsActive && !groupObj.IsDelete
                    select new UserGroupModel
                    {
                        Id = userGroup.Id,
