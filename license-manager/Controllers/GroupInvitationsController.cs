@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace licensemanager.Controllers
 {
     [Produces("application/json")]
-    [AllowAnonymous] //TODO Auth
+    [Authorize]
     public class GroupInvitationsController : Controller
     {
         private IGroupInvitationsRepository GroupInvitationsRepository { get; set; } = new GroupInvitationsRepository(new DataBaseContext());
@@ -22,6 +22,7 @@ namespace licensemanager.Controllers
 
         // POST: api/GroupInvitations/InviteUser
         [HttpPost]
+        [Authorize]
         [Route("api/GroupInvitations/InviteUser")]
         public ResponseModel<int> Post([FromBody]GroupInvitationsModel dataToAdd)
         {
@@ -32,6 +33,9 @@ namespace licensemanager.Controllers
                 if (dataToAdd == null)
                 {
                     throw new Exception("Data is null");
+                }
+                if(GroupInvitationsRepository.Exist(dataToAdd)){
+                    throw new Exception("User has already been invited or exists in a group");
                 }
 
                 var model = new GroupInvitations
@@ -71,6 +75,7 @@ namespace licensemanager.Controllers
 
          // GET: api/GroupInvitations/Invite/token
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/GroupInvitations/Invite/{token}")]
         public ResponseModel<string> GetById(string token)
         {
