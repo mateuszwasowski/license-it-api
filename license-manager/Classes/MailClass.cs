@@ -13,9 +13,9 @@ namespace licensemanager.Classes
 {
     public class MailClass
     {
-         private ISettingsRepository SettingsRepository { get; set; } = new SettingsRepository(new DataBaseContext());
+        public ISettingsRepository SettingsRepository { get; set; } = new SettingsRepository(new DataBaseContext());
 
-        private SettingsDb GetSettings(){
+        public SettingsDb GetSettings(){
             return SettingsRepository.Get().FirstOrDefault();
         }
         internal void SendMail(string token, string email)
