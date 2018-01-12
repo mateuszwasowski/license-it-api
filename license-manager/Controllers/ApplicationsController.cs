@@ -17,7 +17,7 @@ namespace licensemanager.Controllers
     public class ApplicationsController : Controller
     {
 
-        IApplicationsRepository ApplicationsRepository = new ApplicationsRepository(new DataBaseContext());
+        public IApplicationsRepository ApplicationsRepository = new ApplicationsRepository(new DataBaseContext());
 
         // GET: api/Applications/Get
         [HttpGet]

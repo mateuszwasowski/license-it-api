@@ -16,7 +16,9 @@ namespace licensemanager.Controllers
     [Authorize]
     public class LicenseController : Controller
     {
-        
+        public ILicenseRepository AppRepo = new LicenseRepository(new DataBaseContext());
+        public IPermissionsRepository PermissionsRepository = new PermissionsRepository(new DataBaseContext());
+
         // GET: api/License/Get
         [HttpGet]
         [Route("api/License/Get")]
@@ -26,8 +28,7 @@ namespace licensemanager.Controllers
 
             try
             {
-                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
-                var appList = appRepo.GetLicenseModel();
+                var appList = AppRepo.GetLicenseModel();
 
                 if (appList.Any())
                 {
@@ -61,8 +62,7 @@ namespace licensemanager.Controllers
 
             try
             {
-                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
-                var app = appRepo.GetLicensesModelByApplication(id);
+                var app = AppRepo.GetLicensesModelByApplication(id);
 
                 if (app != null)
                 {
@@ -96,8 +96,7 @@ namespace licensemanager.Controllers
 
             try
             {
-                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
-                var app = appRepo.GetById(id);
+                var app = AppRepo.GetById(id);
 
                 if (app != null)
                 {
@@ -127,7 +126,13 @@ namespace licensemanager.Controllers
 
             try
             {
-                var licNumber = LicenseClass.GetNewLicenseString();
+                var licenseClass = new LicenseClass
+                {
+                    LicenseRepository = AppRepo,
+                    PermissionsRepository = PermissionsRepository
+                };
+
+                var licNumber = licenseClass.GetNewLicenseString();
                 if (!string.IsNullOrEmpty(licNumber))
                 {
                     resp.Status = 200;
@@ -164,8 +169,12 @@ namespace licensemanager.Controllers
                     resp.Description = "Data is null";
                     return resp;
                 }
-
-                var validate = LicenseClass.ValidateLicenseAdd(dataToAdd);
+                var licenseClass = new LicenseClass
+                {
+                    LicenseRepository = AppRepo,
+                    PermissionsRepository = PermissionsRepository
+                };
+                var validate = licenseClass.ValidateLicenseAdd(dataToAdd);
                 if (validate != null)
                 {
                     resp.Data = string.Empty;
@@ -174,7 +183,7 @@ namespace licensemanager.Controllers
                     return resp;
                 }
 
-                var licNumber = LicenseClass.GetNewLicenseString();
+                var licNumber = licenseClass.GetNewLicenseString();
                 if (string.IsNullOrEmpty(licNumber))
                 {
                     throw new Exception("Number can't be generate");
@@ -194,14 +203,12 @@ namespace licensemanager.Controllers
                     Number = licNumber,
                     Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
                 };
-
-                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
-
-                if (appRepo.Insert(model))
+                
+                if (AppRepo.Insert(model))
                 {
                     if (model.Permissions != null)
                     {
-                        if (!LicenseClass.InsertPermissions(model))
+                        if (!licenseClass.InsertPermissions(model))
                             throw new Exception("Error in insert permissions");
                     }
                     resp.Data = licNumber;
@@ -237,7 +244,13 @@ namespace licensemanager.Controllers
                     return resp;
                 }
 
-                var validate = LicenseClass.ValidateLicenseAdd(dataToAdd);
+                var licenseClass = new LicenseClass
+                {
+                    LicenseRepository = AppRepo,
+                    PermissionsRepository = PermissionsRepository
+                };
+
+                var validate = licenseClass.ValidateLicenseAdd(dataToAdd);
                 if (validate != null)
                 {
                     resp.Data = 0;
@@ -246,7 +259,7 @@ namespace licensemanager.Controllers
                     return resp;
                 }
 
-                var licNumber = LicenseClass.GetNewLicenseString();
+                var licNumber = licenseClass.GetNewLicenseString();
                 if (string.IsNullOrEmpty(licNumber))
                 {
                     throw new Exception("Number can't be generate");
@@ -266,14 +279,12 @@ namespace licensemanager.Controllers
                     Number = licNumber,
                     Permissions = PermissionClass.ConvertPermission(dataToAdd.PermissionsModel)
                 };
-
-                ILicenseRepository appRepo = new LicenseRepository(new DataBaseContext());
-
-                if (appRepo.Insert(model))
+                
+                if (AppRepo.Insert(model))
                 {
                     if (model.Permissions != null)
                     {
-                        if (!LicenseClass.InsertPermissions(model))
+                        if (!licenseClass.InsertPermissions(model))
                             throw new Exception("Error in insert permissions");
                     }
                     resp.Data = model.Id;
@@ -308,9 +319,8 @@ namespace licensemanager.Controllers
 
                 if (id <= 0)
                     throw new Exception("Id license <= 0");
-
-                ILicenseRepository repo = new LicenseRepository(new DataBaseContext());
-                resp.Data =  repo.EditLicense(id, licenseModel);
+                
+                resp.Data = AppRepo.EditLicense(id, licenseModel);
 
                 resp.Status = 200;
                 resp.Description = "OK";

@@ -8,9 +8,13 @@ using licensemanager.Repositories.Interfaces;
 
 namespace licensemanager.Classes
 {
-    public static class LicenseClass
+    public class LicenseClass
     {
-        public static string GetNewLicenseString()
+
+        public ILicenseRepository LicenseRepository = new LicenseRepository(new DataBaseContext());
+        public IPermissionsRepository PermissionsRepository = new PermissionsRepository(new DataBaseContext());
+
+        public string GetNewLicenseString()
         {
             var stringVal = RandomString(24);
 
@@ -22,7 +26,7 @@ namespace licensemanager.Classes
             return stringVal;
         }
 
-        private static string RandomString(int length)
+        private string RandomString(int length)
         {
             var random = new Random();
             const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
@@ -61,19 +65,18 @@ namespace licensemanager.Classes
             return number;
         }
 
-        public static bool InsertPermissions(Licenses license)
+        public bool InsertPermissions(Licenses license)
         {
-            IPermissionsRepository permRepo = new PermissionsRepository(new DataBaseContext());
             foreach (var row in license.Permissions)
             {
                 row.IdLicense = license.Id;
-                permRepo.Insert(row);
+                PermissionsRepository.Insert(row);
             }
 
             return true;
         }
 
-        public static Exception ValidateLicenseAdd(LicenseModel dataToAdd)
+        public Exception ValidateLicenseAdd(LicenseModel dataToAdd)
         {
             if(dataToAdd.IdClient <=0)
                 return new Exception("Id Client is required");
@@ -84,11 +87,9 @@ namespace licensemanager.Classes
             return null;
         }
 
-        private static bool CheckExistLicenseByNumber(string number)
+        private bool CheckExistLicenseByNumber(string number)
         {
-            ILicenseRepository repo = new LicenseRepository(new DataBaseContext());
-
-            return repo.CheckExistNumber(number);
+            return LicenseRepository.CheckExistNumber(number);
         }
     }
 }

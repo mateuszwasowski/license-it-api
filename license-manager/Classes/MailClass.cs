@@ -7,6 +7,7 @@ using MimeKit;
 using licensemanager.Repositories.Interfaces;
 using licensemanager.Repositories;
 using System.Linq;
+using licensemanager.Models.DataBaseModel;
 
 namespace licensemanager.Classes
 {
@@ -14,6 +15,9 @@ namespace licensemanager.Classes
     {
          private ISettingsRepository SettingsRepository { get; set; } = new SettingsRepository(new DataBaseContext());
 
+        private SettingsDb GetSettings(){
+            return SettingsRepository.Get().FirstOrDefault();
+        }
         internal void SendMail(string token, string email)
         {
             var setting = SettingsRepository.Get().FirstOrDefault();
