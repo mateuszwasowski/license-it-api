@@ -46,7 +46,7 @@ namespace licensemanager.Repositories
 
         public UserModel GetUserByEmail(string email)
         {
-             var user = _context.Users.FirstOrDefault(x => x.Email.Equals(email));
+            var user = _context.Users.FirstOrDefault(x => x.Email.Equals(email));
 
             if (user == null)
                 return null;
@@ -61,6 +61,23 @@ namespace licensemanager.Repositories
                 IsActive = user.IsActive,
                 IsDelete = user.IsDelete
             };
+        }
+
+        public IEnumerable<UserModel> GetUsersByIdGroup(int id)
+        {
+            return from userGroup in _context.UserGroup
+                   join groupObj in _context.Group on userGroup.IdGroup equals groupObj.Id
+                   join userObj in _context.Users on userGroup.IdUser equals userObj.Id
+                   where (userGroup.IdGroup == id && groupObj.IsActive && !groupObj.IsDelete && userObj.IsActive && !userObj.IsDelete && userGroup.IdUser == userObj.Id)
+                   select new UserModel
+                   {
+                       Id = userObj.Id,
+                       FirstName = userObj.FirstName,
+                       LastName = userObj.LastName,
+                       Email = userObj.Email,
+                       IsActive = userObj.IsActive,
+                       IsDelete = userObj.IsDelete
+                   };
         }
     }
 }

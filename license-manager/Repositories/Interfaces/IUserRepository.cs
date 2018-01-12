@@ -12,5 +12,6 @@ namespace licensemanager.Repositories.Interfaces
 
         bool ExistUserByEmail(string email);
         UserModel GetUserByEmail(string email);
+        IEnumerable<UserModel> GetUsersByIdGroup(int id);
     }
 }

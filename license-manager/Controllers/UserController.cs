@@ -76,6 +76,40 @@ namespace licensemanager.Controllers
             return response;
         }
 
+         // GET: api/User/GetUsersByIdGroup/5
+        [HttpGet]
+        [Route("api/User/GetUsersByIdGroup/{id}")]
+        public ResponseModel<IEnumerable<UserModel>> GetUserListByIdGroup(int id)
+        {
+            var resp = new ResponseModel<IEnumerable<UserModel>>();
+
+            try
+            {
+                var app = UserRepo.GetUsersByIdGroup(id);
+
+                if (app != null)
+                {
+                    resp.Data = app;
+                    resp.Status = 200;
+                    resp.Description = "OK";
+                }
+                else
+                {
+                    resp.Status = 500;
+                    resp.Data = null;
+                    resp.Description = "Group not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Status = 500;
+                resp.Description = $"Error: {ex.Message}";
+                resp.Data = null;
+            }
+
+            return resp;
+        }
+
         // POST api/User/Add
         [HttpPost]
         [AllowAnonymous]
